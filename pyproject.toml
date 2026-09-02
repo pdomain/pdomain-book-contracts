@@ -1,10 +1,10 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project]
 name = "pdomain-book-contracts"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Pure-Python contracts shared across the pdomain-* OCR suite"
 authors = [{ name = "CT", email = "concavetrillion@gmail.com" }]
 readme = "README.md"
@@ -24,6 +24,14 @@ dev = [
     "pytest>=8.4,<9",
     "ruff>=0.14,<1",
 ]
+
+[tool.hatch.version]
+source = "vcs"
+
+# Generated at build time; do not edit. Tracked in .gitignore.
+# Importable as `from pdomain_book_contracts._version import __version__, version`.
+[tool.hatch.build.hooks.vcs]
+version-file = "pdomain_book_contracts/_version.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["pdomain_book_contracts"]

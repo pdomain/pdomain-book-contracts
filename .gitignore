@@ -11,3 +11,4 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+pdomain_book_contracts/_version.py
