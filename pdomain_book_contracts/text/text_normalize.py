@@ -1,9 +1,10 @@
 r"""Shared post-OCR text-normalization helpers.
 
-These utilities live in :mod:`pdomain_book_tools.ocr` so that every
-downstream consumer (``pdomain-ocr-cli``, ``pdomain-ocr-simple-gui``, and
-future apps) can apply the same canonical cleanups to OCR output without
-maintaining its own copy.
+These utilities live in :mod:`pdomain_book_contracts.text` (moved from
+``pdomain_book_tools.ocr``) so that every downstream consumer
+(``pdomain-ocr-cli``, ``pdomain-ocr-simple-gui``, and future apps) can apply
+the same canonical cleanups to OCR output without maintaining its own copy
+or paying for an imaging-stack dependency to get it.
 
 Curly-quote glyph keys are written as ``\\uXXXX`` escapes (rather than the
 literal Unicode characters) to sidestep ruff's RUF001 ambiguous-character

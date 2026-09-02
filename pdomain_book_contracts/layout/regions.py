@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from pdomain_book_tools.layout.types import LayoutRegion, RegionType
+from pdomain_book_contracts.layout.types import LayoutRegion, RegionType
 
 if TYPE_CHECKING:
     from collections.abc import Iterable

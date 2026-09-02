@@ -105,6 +105,19 @@ convention = "google"
 # G004, BLE001, TRY, PERF401, S108) do not apply to this file's content,
 # so they are not carried over.
 "pdomain_book_contracts/sources/pgdp/rounds.py" = ["D101", "D102"]
+# Carried over verbatim from pdomain-book-tools' own per-file-ignores for
+# these three files at their old paths (layout/types.py,
+# pdomain_book_tools/ocr/review.py, and layout/geometry.py), pre-dating
+# its 2026-05-17 strict-linting rollout, discovered landing Task 4 Step 4.
+# Only D102 (missing docstrings on pre-strict dataclass methods) fires for
+# types.py and review.py, and only N806 (uppercase locals — L/R/T/B is
+# this codebase's LTRB convention, matching LayoutRegion's own field
+# names) fires for regions.py; book-tools' broader original ignore lists
+# for these files (ANN, G003, G004) do not apply to this content, so they
+# are not carried over.
+"pdomain_book_contracts/layout/types.py" = ["D102"]
+"pdomain_book_contracts/layout/regions.py" = ["N806"]
+"pdomain_book_contracts/ocr/review.py" = ["D102"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["pdomain_book_contracts"]

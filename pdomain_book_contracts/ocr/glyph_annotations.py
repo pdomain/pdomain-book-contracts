@@ -20,10 +20,23 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import StrEnum
-from typing import TYPE_CHECKING, Literal, cast, get_args
+from typing import Literal, Protocol, cast, get_args
 
-if TYPE_CHECKING:
-    from pdomain_book_tools.ocr.word import Word
+
+class _AnnotatableWord(Protocol):
+    """Structural surface :meth:`GlyphAnnotations.validate` needs from a word.
+
+    ``pdomain_book_tools.ocr.word.Word`` satisfies this structurally — the
+    contracts package never imports it, so the one-way dependency direction
+    holds even in this module, which is the sole compatibility boundary
+    here that touches a mutable OCR object at all. ``validate`` only reads
+    ``ground_truth_text``, so a read-only ``@property`` is enough; nothing
+    here assigns to it.
+    """
+
+    @property
+    def ground_truth_text(self) -> str: ...
+
 
 # ---------------------------------------------------------------------------
 # Codepoints banned from ground_truth_text (spec sections 1.1 and 4.1)
@@ -255,14 +268,14 @@ class GlyphAnnotations:
             source=source,
         )
 
-    def validate(self, word: Word) -> None:
+    def validate(self, word: _AnnotatableWord) -> None:
         """Validate these annotations against *word* (spec section 4).
 
         Checks are ordered: GT preconditions first, then annotation internals.
 
         Args:
-            word: The :class:`~pdomain_book_tools.ocr.word.Word` these annotations
-                are attached to.
+            word: The :class:`~pdomain_book_tools.ocr.word.Word` (or anything
+                structurally matching it) these annotations are attached to.
 
         Raises:
             ValueError: On any of the conditions listed in spec section 4.

@@ -5,14 +5,14 @@ from typing import TYPE_CHECKING, TypedDict, cast
 
 from pydantic_core import CoreSchema, core_schema
 
-from pdomain_book_tools.geometry.bounding_box import BoundingBox
-from pdomain_book_tools.ocr.label_normalization import (
-    normalize_character_components,
-    normalize_text_style_labels,
-)
-from pdomain_book_tools.schemas._helpers import (
+from pdomain_book_contracts._schemas import (
     NUMBER_SCHEMA,
     STR_LIST_SCHEMA,
+)
+from pdomain_book_contracts.geometry.bounding_box import BoundingBox
+from pdomain_book_contracts.text.label_normalization import (
+    normalize_character_components,
+    normalize_text_style_labels,
 )
 
 if TYPE_CHECKING:
