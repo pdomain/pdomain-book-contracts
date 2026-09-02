@@ -4,7 +4,7 @@ import functools
 import sys
 from dataclasses import dataclass
 from logging import getLogger
-from typing import TYPE_CHECKING, TypedDict, TypeVar
+from typing import TYPE_CHECKING, Protocol, TypedDict, TypeVar
 
 if sys.version_info >= (3, 12):
     from typing import override
@@ -69,6 +69,84 @@ class _BoundingBoxDict(TypedDict):
     top_left: _PointDict
     bottom_right: _PointDict
     is_normalized: bool | None
+
+
+class ImageOpsUnavailableError(RuntimeError):
+    """Raised when a bounding-box image operation has no registered backend.
+
+    This package deliberately does not depend on an imaging stack (no cv2,
+    no numpy at runtime), so :meth:`BoundingBox.refine`,
+    :meth:`BoundingBox.crop_top` and :meth:`BoundingBox.crop_bottom` need a
+    backend installed via :func:`register_image_ops` before they can run.
+    """
+
+    def __init__(self, operation: str) -> None:
+        super().__init__(
+            f"BoundingBox.{operation}() needs an imaging backend, but none is "
+            "registered. Install pdomain-book-tools and import "
+            "pdomain_book_tools.geometry.image_ops — that import registers "
+            "the backend as a side effect — to provide one."
+        )
+
+
+class ImageOpsProvider(Protocol):
+    """Backend for the imaging operations :class:`BoundingBox` defers to.
+
+    Installed via :func:`register_image_ops`. This package never imports an
+    implementation itself; ``pdomain-book-tools``'s
+    ``pdomain_book_tools.geometry.image_ops`` module is the reference
+    implementation and registers itself as a side effect of being imported.
+    """
+
+    def refine(
+        self,
+        bbox: BoundingBox,
+        image: ndarray,
+        padding_px: int = 0,
+        expand_beyond_original: bool = False,
+    ) -> BoundingBox: ...
+
+    def crop_top(self, bbox: BoundingBox, image: ndarray) -> BoundingBox: ...
+
+    def crop_bottom(self, bbox: BoundingBox, image: ndarray) -> BoundingBox: ...
+
+
+class _ImageOpsSlot:
+    """Mutable holder for the registered provider.
+
+    A plain module-level attribute would need ``global`` to update from
+    :func:`register_image_ops`, which Ruff's PLW0603 flags; mutating an
+    attribute on a module-level singleton avoids that without hiding the
+    registration behind extra indirection.
+    """
+
+    provider: ImageOpsProvider | None = None
+
+
+_image_ops_slot = _ImageOpsSlot()
+
+
+def register_image_ops(provider: ImageOpsProvider | None) -> None:
+    """Install *provider* as the imaging backend for the box's image ops.
+
+    Called by ``pdomain_book_tools.geometry.image_ops`` at its own import
+    time. This package must never import that module — or any part of
+    ``pdomain_book_tools`` — itself; this function is the only coupling
+    point, and it runs in the direction book-tools depends on contracts, not
+    the reverse.
+
+    Passing ``None`` clears the registration. Production code has no reason
+    to do this; it exists so tests can isolate their provider state without
+    reaching into this module's private slot.
+    """
+    _image_ops_slot.provider = provider
+
+
+def _require_image_ops(operation: str) -> ImageOpsProvider:
+    provider = _image_ops_slot.provider
+    if provider is None:
+        raise ImageOpsUnavailableError(operation)
+    return provider
 
 
 @dataclass
@@ -594,14 +672,14 @@ class BoundingBox:
         The implementation lives in
         :func:`pdomain_book_tools.geometry.image_ops.refine_bbox`; call that
         directly in new code. This wrapper is preserved for backward
-        compatibility (R-01/R-03).
-        """
-        # Local import to avoid a cycle: image_ops imports BoundingBox.
-        from pdomain_book_tools.geometry.image_ops import (  # pyright: ignore[reportMissingImports]
-            refine_bbox,  # pyright: ignore[reportUnknownVariableType]
-        )
+        compatibility (R-01/R-03) and dispatches to whatever backend
+        :func:`register_image_ops` installed.
 
-        return refine_bbox(  # pyright: ignore[reportUnknownVariableType]
+        Raises:
+            ImageOpsUnavailableError: No backend is registered. Import
+                ``pdomain_book_tools.geometry.image_ops`` to install one.
+        """
+        return _require_image_ops("refine").refine(
             self,
             image,
             padding_px=padding_px,
@@ -614,13 +692,14 @@ class BoundingBox:
         The implementation lives in
         :func:`pdomain_book_tools.geometry.image_ops.crop_bottom_bbox`; call
         that directly in new code. This wrapper is preserved for
-        backward compatibility (R-01/R-03).
-        """
-        from pdomain_book_tools.geometry.image_ops import (  # pyright: ignore[reportMissingImports]
-            crop_bottom_bbox,  # pyright: ignore[reportUnknownVariableType]
-        )
+        backward compatibility (R-01/R-03) and dispatches to whatever backend
+        :func:`register_image_ops` installed.
 
-        return crop_bottom_bbox(self, image)  # pyright: ignore[reportUnknownVariableType]
+        Raises:
+            ImageOpsUnavailableError: No backend is registered. Import
+                ``pdomain_book_tools.geometry.image_ops`` to install one.
+        """
+        return _require_image_ops("crop_bottom").crop_bottom(self, image)
 
     def crop_top(self, image: ndarray) -> BoundingBox:
         """Return a new bbox cropped to the top half of its image content.
@@ -628,13 +707,14 @@ class BoundingBox:
         The implementation lives in
         :func:`pdomain_book_tools.geometry.image_ops.crop_top_bbox`; call
         that directly in new code. This wrapper is preserved for
-        backward compatibility (R-01/R-03).
-        """
-        from pdomain_book_tools.geometry.image_ops import (  # pyright: ignore[reportMissingImports]
-            crop_top_bbox,  # pyright: ignore[reportUnknownVariableType]
-        )
+        backward compatibility (R-01/R-03) and dispatches to whatever backend
+        :func:`register_image_ops` installed.
 
-        return crop_top_bbox(self, image)  # pyright: ignore[reportUnknownVariableType]
+        Raises:
+            ImageOpsUnavailableError: No backend is registered. Import
+                ``pdomain_book_tools.geometry.image_ops`` to install one.
+        """
+        return _require_image_ops("crop_top").crop_top(self, image)
 
     def clamp_to_image(self, width: int, height: int) -> BoundingBox | None:
         """Return new box clamped to [0,width]x[0,height] in pixel or [0,1] if normalized.

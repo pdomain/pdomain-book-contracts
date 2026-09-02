@@ -47,10 +47,12 @@ ignore = [
     # PLC0415 (import-not-at-top-level): pdomain-book-tools ignores this
     # repo-wide for the same reason it recurs here — deferred imports break
     # circular deps and avoid loading optional-heavy modules until needed.
-    # geometry/bounding_box.py's refine()/crop_top()/crop_bottom() import
-    # pdomain_book_tools.geometry.image_ops (cv2) lazily, by design: these
-    # are back-compat wrappers, and this package must stay importable
-    # without an imaging stack, so the import cannot move to module level.
+    # geometry/bounding_box.py defers a few stdlib imports (warnings, math,
+    # json) inside individual methods to keep them out of the module's
+    # always-paid import cost; its refine()/crop_top()/crop_bottom() no
+    # longer import anything themselves — they dispatch through the
+    # ImageOpsProvider registry instead, which is what keeps this package
+    # free of an imaging-stack dependency, not a local import.
     "PLC0415",
 ]
 
