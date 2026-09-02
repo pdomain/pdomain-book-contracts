@@ -42,6 +42,16 @@ entire reason the package was split out.
 
 <!-- workspace-conventions:start -->
 
+## Rule: Do not read this package's coverage as a pass
+
+This package enforces no coverage floor. Its own 12 tests reach 36 percent, and the code is
+actually exercised by `pdomain-book-tools`' suite through the re-export shims, which measures
+none of it. See
+[extracted code left its coverage gate behind](docs/issues/2026-09-02-contracts-code-left-its-coverage-gate-behind.md).
+
+Do not add a floor here until enough tests live here for the number to mean something, and
+do not restore the gate by measuring this package from book-tools.
+
 ## Rule: Write docs clearly
 
 **The rule.** Follow [Writing Style](docs/process/writing-style.md) for docs,
