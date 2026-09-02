@@ -1,0 +1,1558 @@
+{
+ "licenses": [
+  {
+   "licenseId": "0BSD"
+  },
+  {
+   "licenseId": "AAL"
+  },
+  {
+   "licenseId": "Abstyles"
+  },
+  {
+   "licenseId": "Adobe-2006"
+  },
+  {
+   "licenseId": "Adobe-Glyph"
+  },
+  {
+   "licenseId": "ADSL"
+  },
+  {
+   "licenseId": "AFL-1.1"
+  },
+  {
+   "licenseId": "AFL-1.2"
+  },
+  {
+   "licenseId": "AFL-2.0"
+  },
+  {
+   "licenseId": "AFL-2.1"
+  },
+  {
+   "licenseId": "AFL-3.0"
+  },
+  {
+   "licenseId": "Afmparse"
+  },
+  {
+   "licenseId": "AGPL-1.0-only"
+  },
+  {
+   "licenseId": "AGPL-1.0-or-later"
+  },
+  {
+   "licenseId": "AGPL-3.0-only"
+  },
+  {
+   "licenseId": "AGPL-3.0-or-later"
+  },
+  {
+   "licenseId": "Aladdin"
+  },
+  {
+   "licenseId": "AMDPLPA"
+  },
+  {
+   "licenseId": "AML"
+  },
+  {
+   "licenseId": "AMPAS"
+  },
+  {
+   "licenseId": "ANTLR-PD"
+  },
+  {
+   "licenseId": "ANTLR-PD-fallback"
+  },
+  {
+   "licenseId": "Apache-1.0"
+  },
+  {
+   "licenseId": "Apache-1.1"
+  },
+  {
+   "licenseId": "Apache-2.0"
+  },
+  {
+   "licenseId": "APAFML"
+  },
+  {
+   "licenseId": "APL-1.0"
+  },
+  {
+   "licenseId": "App-s2p"
+  },
+  {
+   "licenseId": "APSL-1.0"
+  },
+  {
+   "licenseId": "APSL-1.1"
+  },
+  {
+   "licenseId": "APSL-2.0"
+  },
+  {
+   "licenseId": "Arphic-1999"
+  },
+  {
+   "licenseId": "Artistic-1.0"
+  },
+  {
+   "licenseId": "Artistic-1.0-cl8"
+  },
+  {
+   "licenseId": "Artistic-1.0-Perl"
+  },
+  {
+   "licenseId": "Artistic-2.0"
+  },
+  {
+   "licenseId": "ASWF-Digital-Assets-1.0"
+  },
+  {
+   "licenseId": "ASWF-Digital-Assets-1.1"
+  },
+  {
+   "licenseId": "Baekmuk"
+  },
+  {
+   "licenseId": "Bahyph"
+  },
+  {
+   "licenseId": "Barr"
+  },
+  {
+   "licenseId": "Beerware"
+  },
+  {
+   "licenseId": "Bitstream-Charter"
+  },
+  {
+   "licenseId": "Bitstream-Vera"
+  },
+  {
+   "licenseId": "BitTorrent-1.0"
+  },
+  {
+   "licenseId": "BitTorrent-1.1"
+  },
+  {
+   "licenseId": "blessing"
+  },
+  {
+   "licenseId": "BlueOak-1.0.0"
+  },
+  {
+   "licenseId": "Boehm-GC"
+  },
+  {
+   "licenseId": "Borceux"
+  },
+  {
+   "licenseId": "Brian-Gladman-3-Clause"
+  },
+  {
+   "licenseId": "BSD-1-Clause"
+  },
+  {
+   "licenseId": "BSD-2-Clause"
+  },
+  {
+   "licenseId": "BSD-2-Clause-Patent"
+  },
+  {
+   "licenseId": "BSD-2-Clause-Views"
+  },
+  {
+   "licenseId": "BSD-3-Clause"
+  },
+  {
+   "licenseId": "BSD-3-Clause-Attribution"
+  },
+  {
+   "licenseId": "BSD-3-Clause-Clear"
+  },
+  {
+   "licenseId": "BSD-3-Clause-LBNL"
+  },
+  {
+   "licenseId": "BSD-3-Clause-Modification"
+  },
+  {
+   "licenseId": "BSD-3-Clause-No-Military-License"
+  },
+  {
+   "licenseId": "BSD-3-Clause-No-Nuclear-License"
+  },
+  {
+   "licenseId": "BSD-3-Clause-No-Nuclear-License-2014"
+  },
+  {
+   "licenseId": "BSD-3-Clause-No-Nuclear-Warranty"
+  },
+  {
+   "licenseId": "BSD-3-Clause-Open-MPI"
+  },
+  {
+   "licenseId": "BSD-4-Clause"
+  },
+  {
+   "licenseId": "BSD-4-Clause-Shortened"
+  },
+  {
+   "licenseId": "BSD-4-Clause-UC"
+  },
+  {
+   "licenseId": "BSD-4.3RENO"
+  },
+  {
+   "licenseId": "BSD-4.3TAHOE"
+  },
+  {
+   "licenseId": "BSD-Advertising-Acknowledgement"
+  },
+  {
+   "licenseId": "BSD-Attribution-HPND-disclaimer"
+  },
+  {
+   "licenseId": "BSD-Protection"
+  },
+  {
+   "licenseId": "BSD-Source-Code"
+  },
+  {
+   "licenseId": "BSL-1.0"
+  },
+  {
+   "licenseId": "BUSL-1.1"
+  },
+  {
+   "licenseId": "bzip2-1.0.6"
+  },
+  {
+   "licenseId": "C-UDA-1.0"
+  },
+  {
+   "licenseId": "CAL-1.0"
+  },
+  {
+   "licenseId": "CAL-1.0-Combined-Work-Exception"
+  },
+  {
+   "licenseId": "Caldera"
+  },
+  {
+   "licenseId": "CATOSL-1.1"
+  },
+  {
+   "licenseId": "CC-BY-1.0"
+  },
+  {
+   "licenseId": "CC-BY-2.0"
+  },
+  {
+   "licenseId": "CC-BY-2.5"
+  },
+  {
+   "licenseId": "CC-BY-2.5-AU"
+  },
+  {
+   "licenseId": "CC-BY-3.0"
+  },
+  {
+   "licenseId": "CC-BY-3.0-AT"
+  },
+  {
+   "licenseId": "CC-BY-3.0-DE"
+  },
+  {
+   "licenseId": "CC-BY-3.0-IGO"
+  },
+  {
+   "licenseId": "CC-BY-3.0-NL"
+  },
+  {
+   "licenseId": "CC-BY-3.0-US"
+  },
+  {
+   "licenseId": "CC-BY-4.0"
+  },
+  {
+   "licenseId": "CC-BY-NC-1.0"
+  },
+  {
+   "licenseId": "CC-BY-NC-2.0"
+  },
+  {
+   "licenseId": "CC-BY-NC-2.5"
+  },
+  {
+   "licenseId": "CC-BY-NC-3.0"
+  },
+  {
+   "licenseId": "CC-BY-NC-3.0-DE"
+  },
+  {
+   "licenseId": "CC-BY-NC-4.0"
+  },
+  {
+   "licenseId": "CC-BY-NC-ND-1.0"
+  },
+  {
+   "licenseId": "CC-BY-NC-ND-2.0"
+  },
+  {
+   "licenseId": "CC-BY-NC-ND-2.5"
+  },
+  {
+   "licenseId": "CC-BY-NC-ND-3.0"
+  },
+  {
+   "licenseId": "CC-BY-NC-ND-3.0-DE"
+  },
+  {
+   "licenseId": "CC-BY-NC-ND-3.0-IGO"
+  },
+  {
+   "licenseId": "CC-BY-NC-ND-4.0"
+  },
+  {
+   "licenseId": "CC-BY-NC-SA-1.0"
+  },
+  {
+   "licenseId": "CC-BY-NC-SA-2.0"
+  },
+  {
+   "licenseId": "CC-BY-NC-SA-2.0-DE"
+  },
+  {
+   "licenseId": "CC-BY-NC-SA-2.0-FR"
+  },
+  {
+   "licenseId": "CC-BY-NC-SA-2.0-UK"
+  },
+  {
+   "licenseId": "CC-BY-NC-SA-2.5"
+  },
+  {
+   "licenseId": "CC-BY-NC-SA-3.0"
+  },
+  {
+   "licenseId": "CC-BY-NC-SA-3.0-DE"
+  },
+  {
+   "licenseId": "CC-BY-NC-SA-3.0-IGO"
+  },
+  {
+   "licenseId": "CC-BY-NC-SA-4.0"
+  },
+  {
+   "licenseId": "CC-BY-ND-1.0"
+  },
+  {
+   "licenseId": "CC-BY-ND-2.0"
+  },
+  {
+   "licenseId": "CC-BY-ND-2.5"
+  },
+  {
+   "licenseId": "CC-BY-ND-3.0"
+  },
+  {
+   "licenseId": "CC-BY-ND-3.0-DE"
+  },
+  {
+   "licenseId": "CC-BY-ND-4.0"
+  },
+  {
+   "licenseId": "CC-BY-SA-1.0"
+  },
+  {
+   "licenseId": "CC-BY-SA-2.0"
+  },
+  {
+   "licenseId": "CC-BY-SA-2.0-UK"
+  },
+  {
+   "licenseId": "CC-BY-SA-2.1-JP"
+  },
+  {
+   "licenseId": "CC-BY-SA-2.5"
+  },
+  {
+   "licenseId": "CC-BY-SA-3.0"
+  },
+  {
+   "licenseId": "CC-BY-SA-3.0-AT"
+  },
+  {
+   "licenseId": "CC-BY-SA-3.0-DE"
+  },
+  {
+   "licenseId": "CC-BY-SA-4.0"
+  },
+  {
+   "licenseId": "CC-PDDC"
+  },
+  {
+   "licenseId": "CC0-1.0"
+  },
+  {
+   "licenseId": "CDDL-1.0"
+  },
+  {
+   "licenseId": "CDDL-1.1"
+  },
+  {
+   "licenseId": "CDL-1.0"
+  },
+  {
+   "licenseId": "CDLA-Permissive-1.0"
+  },
+  {
+   "licenseId": "CDLA-Permissive-2.0"
+  },
+  {
+   "licenseId": "CDLA-Sharing-1.0"
+  },
+  {
+   "licenseId": "CECILL-1.0"
+  },
+  {
+   "licenseId": "CECILL-1.1"
+  },
+  {
+   "licenseId": "CECILL-2.0"
+  },
+  {
+   "licenseId": "CECILL-2.1"
+  },
+  {
+   "licenseId": "CECILL-B"
+  },
+  {
+   "licenseId": "CECILL-C"
+  },
+  {
+   "licenseId": "CERN-OHL-1.1"
+  },
+  {
+   "licenseId": "CERN-OHL-1.2"
+  },
+  {
+   "licenseId": "CERN-OHL-P-2.0"
+  },
+  {
+   "licenseId": "CERN-OHL-S-2.0"
+  },
+  {
+   "licenseId": "CERN-OHL-W-2.0"
+  },
+  {
+   "licenseId": "CFITSIO"
+  },
+  {
+   "licenseId": "checkmk"
+  },
+  {
+   "licenseId": "ClArtistic"
+  },
+  {
+   "licenseId": "Clips"
+  },
+  {
+   "licenseId": "CMU-Mach"
+  },
+  {
+   "licenseId": "CNRI-Jython"
+  },
+  {
+   "licenseId": "CNRI-Python"
+  },
+  {
+   "licenseId": "CNRI-Python-GPL-Compatible"
+  },
+  {
+   "licenseId": "COIL-1.0"
+  },
+  {
+   "licenseId": "Community-Spec-1.0"
+  },
+  {
+   "licenseId": "Condor-1.1"
+  },
+  {
+   "licenseId": "copyleft-next-0.3.0"
+  },
+  {
+   "licenseId": "copyleft-next-0.3.1"
+  },
+  {
+   "licenseId": "Cornell-Lossless-JPEG"
+  },
+  {
+   "licenseId": "CPAL-1.0"
+  },
+  {
+   "licenseId": "CPL-1.0"
+  },
+  {
+   "licenseId": "CPOL-1.02"
+  },
+  {
+   "licenseId": "Crossword"
+  },
+  {
+   "licenseId": "CrystalStacker"
+  },
+  {
+   "licenseId": "CUA-OPL-1.0"
+  },
+  {
+   "licenseId": "Cube"
+  },
+  {
+   "licenseId": "curl"
+  },
+  {
+   "licenseId": "D-FSL-1.0"
+  },
+  {
+   "licenseId": "diffmark"
+  },
+  {
+   "licenseId": "DL-DE-BY-2.0"
+  },
+  {
+   "licenseId": "DOC"
+  },
+  {
+   "licenseId": "Dotseqn"
+  },
+  {
+   "licenseId": "DRL-1.0"
+  },
+  {
+   "licenseId": "DSDP"
+  },
+  {
+   "licenseId": "dvipdfm"
+  },
+  {
+   "licenseId": "ECL-1.0"
+  },
+  {
+   "licenseId": "ECL-2.0"
+  },
+  {
+   "licenseId": "EFL-1.0"
+  },
+  {
+   "licenseId": "EFL-2.0"
+  },
+  {
+   "licenseId": "eGenix"
+  },
+  {
+   "licenseId": "Elastic-2.0"
+  },
+  {
+   "licenseId": "Entessa"
+  },
+  {
+   "licenseId": "EPICS"
+  },
+  {
+   "licenseId": "EPL-1.0"
+  },
+  {
+   "licenseId": "EPL-2.0"
+  },
+  {
+   "licenseId": "ErlPL-1.1"
+  },
+  {
+   "licenseId": "etalab-2.0"
+  },
+  {
+   "licenseId": "EUDatagrid"
+  },
+  {
+   "licenseId": "EUPL-1.0"
+  },
+  {
+   "licenseId": "EUPL-1.1"
+  },
+  {
+   "licenseId": "EUPL-1.2"
+  },
+  {
+   "licenseId": "Eurosym"
+  },
+  {
+   "licenseId": "Fair"
+  },
+  {
+   "licenseId": "FDK-AAC"
+  },
+  {
+   "licenseId": "Frameworx-1.0"
+  },
+  {
+   "licenseId": "FreeBSD-DOC"
+  },
+  {
+   "licenseId": "FreeImage"
+  },
+  {
+   "licenseId": "FSFAP"
+  },
+  {
+   "licenseId": "FSFUL"
+  },
+  {
+   "licenseId": "FSFULLR"
+  },
+  {
+   "licenseId": "FSFULLRWD"
+  },
+  {
+   "licenseId": "FTL"
+  },
+  {
+   "licenseId": "GD"
+  },
+  {
+   "licenseId": "GFDL-1.1-invariants-only"
+  },
+  {
+   "licenseId": "GFDL-1.1-invariants-or-later"
+  },
+  {
+   "licenseId": "GFDL-1.1-no-invariants-only"
+  },
+  {
+   "licenseId": "GFDL-1.1-no-invariants-or-later"
+  },
+  {
+   "licenseId": "GFDL-1.1-only"
+  },
+  {
+   "licenseId": "GFDL-1.1-or-later"
+  },
+  {
+   "licenseId": "GFDL-1.2-invariants-only"
+  },
+  {
+   "licenseId": "GFDL-1.2-invariants-or-later"
+  },
+  {
+   "licenseId": "GFDL-1.2-no-invariants-only"
+  },
+  {
+   "licenseId": "GFDL-1.2-no-invariants-or-later"
+  },
+  {
+   "licenseId": "GFDL-1.2-only"
+  },
+  {
+   "licenseId": "GFDL-1.2-or-later"
+  },
+  {
+   "licenseId": "GFDL-1.3-invariants-only"
+  },
+  {
+   "licenseId": "GFDL-1.3-invariants-or-later"
+  },
+  {
+   "licenseId": "GFDL-1.3-no-invariants-only"
+  },
+  {
+   "licenseId": "GFDL-1.3-no-invariants-or-later"
+  },
+  {
+   "licenseId": "GFDL-1.3-only"
+  },
+  {
+   "licenseId": "GFDL-1.3-or-later"
+  },
+  {
+   "licenseId": "Giftware"
+  },
+  {
+   "licenseId": "GL2PS"
+  },
+  {
+   "licenseId": "Glide"
+  },
+  {
+   "licenseId": "Glulxe"
+  },
+  {
+   "licenseId": "GLWTPL"
+  },
+  {
+   "licenseId": "gnuplot"
+  },
+  {
+   "licenseId": "GPL-1.0-only"
+  },
+  {
+   "licenseId": "GPL-1.0-or-later"
+  },
+  {
+   "licenseId": "GPL-2.0-only"
+  },
+  {
+   "licenseId": "GPL-2.0-or-later"
+  },
+  {
+   "licenseId": "GPL-3.0-only"
+  },
+  {
+   "licenseId": "GPL-3.0-or-later"
+  },
+  {
+   "licenseId": "Graphics-Gems"
+  },
+  {
+   "licenseId": "gSOAP-1.3b"
+  },
+  {
+   "licenseId": "HaskellReport"
+  },
+  {
+   "licenseId": "Hippocratic-2.1"
+  },
+  {
+   "licenseId": "HPND"
+  },
+  {
+   "licenseId": "HPND-sell-variant"
+  },
+  {
+   "licenseId": "HPND-sell-variant-MIT-disclaimer"
+  },
+  {
+   "licenseId": "HTMLTIDY"
+  },
+  {
+   "licenseId": "IBM-pibs"
+  },
+  {
+   "licenseId": "ICU"
+  },
+  {
+   "licenseId": "IEC-Code-Components-EULA"
+  },
+  {
+   "licenseId": "IJG"
+  },
+  {
+   "licenseId": "IJG-short"
+  },
+  {
+   "licenseId": "ImageMagick"
+  },
+  {
+   "licenseId": "iMatix"
+  },
+  {
+   "licenseId": "Imlib2"
+  },
+  {
+   "licenseId": "Info-ZIP"
+  },
+  {
+   "licenseId": "Intel"
+  },
+  {
+   "licenseId": "Intel-ACPI"
+  },
+  {
+   "licenseId": "Interbase-1.0"
+  },
+  {
+   "licenseId": "IPA"
+  },
+  {
+   "licenseId": "IPL-1.0"
+  },
+  {
+   "licenseId": "ISC"
+  },
+  {
+   "licenseId": "Jam"
+  },
+  {
+   "licenseId": "JasPer-2.0"
+  },
+  {
+   "licenseId": "JPL-image"
+  },
+  {
+   "licenseId": "JPNIC"
+  },
+  {
+   "licenseId": "JSON"
+  },
+  {
+   "licenseId": "Kazlib"
+  },
+  {
+   "licenseId": "Knuth-CTAN"
+  },
+  {
+   "licenseId": "LAL-1.2"
+  },
+  {
+   "licenseId": "LAL-1.3"
+  },
+  {
+   "licenseId": "Latex2e"
+  },
+  {
+   "licenseId": "Leptonica"
+  },
+  {
+   "licenseId": "LGPL-2.0-only"
+  },
+  {
+   "licenseId": "LGPL-2.0-or-later"
+  },
+  {
+   "licenseId": "LGPL-2.1-only"
+  },
+  {
+   "licenseId": "LGPL-2.1-or-later"
+  },
+  {
+   "licenseId": "LGPL-3.0-only"
+  },
+  {
+   "licenseId": "LGPL-3.0-or-later"
+  },
+  {
+   "licenseId": "LGPLLR"
+  },
+  {
+   "licenseId": "Libpng"
+  },
+  {
+   "licenseId": "libpng-2.0"
+  },
+  {
+   "licenseId": "libselinux-1.0"
+  },
+  {
+   "licenseId": "libtiff"
+  },
+  {
+   "licenseId": "libutil-David-Nugent"
+  },
+  {
+   "licenseId": "LiLiQ-P-1.1"
+  },
+  {
+   "licenseId": "LiLiQ-R-1.1"
+  },
+  {
+   "licenseId": "LiLiQ-Rplus-1.1"
+  },
+  {
+   "licenseId": "Linux-man-pages-1-para"
+  },
+  {
+   "licenseId": "Linux-man-pages-copyleft"
+  },
+  {
+   "licenseId": "Linux-man-pages-copyleft-2-para"
+  },
+  {
+   "licenseId": "Linux-man-pages-copyleft-var"
+  },
+  {
+   "licenseId": "Linux-OpenIB"
+  },
+  {
+   "licenseId": "LOOP"
+  },
+  {
+   "licenseId": "LPL-1.0"
+  },
+  {
+   "licenseId": "LPL-1.02"
+  },
+  {
+   "licenseId": "LPPL-1.0"
+  },
+  {
+   "licenseId": "LPPL-1.1"
+  },
+  {
+   "licenseId": "LPPL-1.2"
+  },
+  {
+   "licenseId": "LPPL-1.3a"
+  },
+  {
+   "licenseId": "LPPL-1.3c"
+  },
+  {
+   "licenseId": "LZMA-SDK-9.11-to-9.20"
+  },
+  {
+   "licenseId": "LZMA-SDK-9.22"
+  },
+  {
+   "licenseId": "MakeIndex"
+  },
+  {
+   "licenseId": "Martin-Birgmeier"
+  },
+  {
+   "licenseId": "metamail"
+  },
+  {
+   "licenseId": "Minpack"
+  },
+  {
+   "licenseId": "MirOS"
+  },
+  {
+   "licenseId": "MIT"
+  },
+  {
+   "licenseId": "MIT-0"
+  },
+  {
+   "licenseId": "MIT-advertising"
+  },
+  {
+   "licenseId": "MIT-CMU"
+  },
+  {
+   "licenseId": "MIT-enna"
+  },
+  {
+   "licenseId": "MIT-feh"
+  },
+  {
+   "licenseId": "MIT-Festival"
+  },
+  {
+   "licenseId": "MIT-Modern-Variant"
+  },
+  {
+   "licenseId": "MIT-open-group"
+  },
+  {
+   "licenseId": "MIT-Wu"
+  },
+  {
+   "licenseId": "MITNFA"
+  },
+  {
+   "licenseId": "Motosoto"
+  },
+  {
+   "licenseId": "mpi-permissive"
+  },
+  {
+   "licenseId": "mpich2"
+  },
+  {
+   "licenseId": "MPL-1.0"
+  },
+  {
+   "licenseId": "MPL-1.1"
+  },
+  {
+   "licenseId": "MPL-2.0"
+  },
+  {
+   "licenseId": "MPL-2.0-no-copyleft-exception"
+  },
+  {
+   "licenseId": "mplus"
+  },
+  {
+   "licenseId": "MS-LPL"
+  },
+  {
+   "licenseId": "MS-PL"
+  },
+  {
+   "licenseId": "MS-RL"
+  },
+  {
+   "licenseId": "MTLL"
+  },
+  {
+   "licenseId": "MulanPSL-1.0"
+  },
+  {
+   "licenseId": "MulanPSL-2.0"
+  },
+  {
+   "licenseId": "Multics"
+  },
+  {
+   "licenseId": "Mup"
+  },
+  {
+   "licenseId": "NAIST-2003"
+  },
+  {
+   "licenseId": "NASA-1.3"
+  },
+  {
+   "licenseId": "Naumen"
+  },
+  {
+   "licenseId": "NBPL-1.0"
+  },
+  {
+   "licenseId": "NCGL-UK-2.0"
+  },
+  {
+   "licenseId": "NCSA"
+  },
+  {
+   "licenseId": "Net-SNMP"
+  },
+  {
+   "licenseId": "NetCDF"
+  },
+  {
+   "licenseId": "Newsletr"
+  },
+  {
+   "licenseId": "NGPL"
+  },
+  {
+   "licenseId": "NICTA-1.0"
+  },
+  {
+   "licenseId": "NIST-PD"
+  },
+  {
+   "licenseId": "NIST-PD-fallback"
+  },
+  {
+   "licenseId": "NIST-Software"
+  },
+  {
+   "licenseId": "NLOD-1.0"
+  },
+  {
+   "licenseId": "NLOD-2.0"
+  },
+  {
+   "licenseId": "NLPL"
+  },
+  {
+   "licenseId": "Nokia"
+  },
+  {
+   "licenseId": "NOSL"
+  },
+  {
+   "licenseId": "Noweb"
+  },
+  {
+   "licenseId": "NPL-1.0"
+  },
+  {
+   "licenseId": "NPL-1.1"
+  },
+  {
+   "licenseId": "NPOSL-3.0"
+  },
+  {
+   "licenseId": "NRL"
+  },
+  {
+   "licenseId": "NTP"
+  },
+  {
+   "licenseId": "NTP-0"
+  },
+  {
+   "licenseId": "O-UDA-1.0"
+  },
+  {
+   "licenseId": "OCCT-PL"
+  },
+  {
+   "licenseId": "OCLC-2.0"
+  },
+  {
+   "licenseId": "ODbL-1.0"
+  },
+  {
+   "licenseId": "ODC-By-1.0"
+  },
+  {
+   "licenseId": "OFFIS"
+  },
+  {
+   "licenseId": "OFL-1.0"
+  },
+  {
+   "licenseId": "OFL-1.0-no-RFN"
+  },
+  {
+   "licenseId": "OFL-1.0-RFN"
+  },
+  {
+   "licenseId": "OFL-1.1"
+  },
+  {
+   "licenseId": "OFL-1.1-no-RFN"
+  },
+  {
+   "licenseId": "OFL-1.1-RFN"
+  },
+  {
+   "licenseId": "OGC-1.0"
+  },
+  {
+   "licenseId": "OGDL-Taiwan-1.0"
+  },
+  {
+   "licenseId": "OGL-Canada-2.0"
+  },
+  {
+   "licenseId": "OGL-UK-1.0"
+  },
+  {
+   "licenseId": "OGL-UK-2.0"
+  },
+  {
+   "licenseId": "OGL-UK-3.0"
+  },
+  {
+   "licenseId": "OGTSL"
+  },
+  {
+   "licenseId": "OLDAP-1.1"
+  },
+  {
+   "licenseId": "OLDAP-1.2"
+  },
+  {
+   "licenseId": "OLDAP-1.3"
+  },
+  {
+   "licenseId": "OLDAP-1.4"
+  },
+  {
+   "licenseId": "OLDAP-2.0"
+  },
+  {
+   "licenseId": "OLDAP-2.0.1"
+  },
+  {
+   "licenseId": "OLDAP-2.1"
+  },
+  {
+   "licenseId": "OLDAP-2.2"
+  },
+  {
+   "licenseId": "OLDAP-2.2.1"
+  },
+  {
+   "licenseId": "OLDAP-2.2.2"
+  },
+  {
+   "licenseId": "OLDAP-2.3"
+  },
+  {
+   "licenseId": "OLDAP-2.4"
+  },
+  {
+   "licenseId": "OLDAP-2.5"
+  },
+  {
+   "licenseId": "OLDAP-2.6"
+  },
+  {
+   "licenseId": "OLDAP-2.7"
+  },
+  {
+   "licenseId": "OLDAP-2.8"
+  },
+  {
+   "licenseId": "OLFL-1.3"
+  },
+  {
+   "licenseId": "OML"
+  },
+  {
+   "licenseId": "OpenPBS-2.3"
+  },
+  {
+   "licenseId": "OpenSSL"
+  },
+  {
+   "licenseId": "OPL-1.0"
+  },
+  {
+   "licenseId": "OPL-UK-3.0"
+  },
+  {
+   "licenseId": "OPUBL-1.0"
+  },
+  {
+   "licenseId": "OSET-PL-2.1"
+  },
+  {
+   "licenseId": "OSL-1.0"
+  },
+  {
+   "licenseId": "OSL-1.1"
+  },
+  {
+   "licenseId": "OSL-2.0"
+  },
+  {
+   "licenseId": "OSL-2.1"
+  },
+  {
+   "licenseId": "OSL-3.0"
+  },
+  {
+   "licenseId": "Parity-6.0.0"
+  },
+  {
+   "licenseId": "Parity-7.0.0"
+  },
+  {
+   "licenseId": "PDDL-1.0"
+  },
+  {
+   "licenseId": "PHP-3.0"
+  },
+  {
+   "licenseId": "PHP-3.01"
+  },
+  {
+   "licenseId": "Plexus"
+  },
+  {
+   "licenseId": "PolyForm-Noncommercial-1.0.0"
+  },
+  {
+   "licenseId": "PolyForm-Small-Business-1.0.0"
+  },
+  {
+   "licenseId": "PostgreSQL"
+  },
+  {
+   "licenseId": "PSF-2.0"
+  },
+  {
+   "licenseId": "psfrag"
+  },
+  {
+   "licenseId": "psutils"
+  },
+  {
+   "licenseId": "Python-2.0"
+  },
+  {
+   "licenseId": "Python-2.0.1"
+  },
+  {
+   "licenseId": "Qhull"
+  },
+  {
+   "licenseId": "QPL-1.0"
+  },
+  {
+   "licenseId": "QPL-1.0-INRIA-2004"
+  },
+  {
+   "licenseId": "Rdisc"
+  },
+  {
+   "licenseId": "RHeCos-1.1"
+  },
+  {
+   "licenseId": "RPL-1.1"
+  },
+  {
+   "licenseId": "RPL-1.5"
+  },
+  {
+   "licenseId": "RPSL-1.0"
+  },
+  {
+   "licenseId": "RSA-MD"
+  },
+  {
+   "licenseId": "RSCPL"
+  },
+  {
+   "licenseId": "Ruby"
+  },
+  {
+   "licenseId": "SAX-PD"
+  },
+  {
+   "licenseId": "Saxpath"
+  },
+  {
+   "licenseId": "SCEA"
+  },
+  {
+   "licenseId": "SchemeReport"
+  },
+  {
+   "licenseId": "Sendmail"
+  },
+  {
+   "licenseId": "Sendmail-8.23"
+  },
+  {
+   "licenseId": "SGI-B-1.0"
+  },
+  {
+   "licenseId": "SGI-B-1.1"
+  },
+  {
+   "licenseId": "SGI-B-2.0"
+  },
+  {
+   "licenseId": "SGP4"
+  },
+  {
+   "licenseId": "SHL-0.5"
+  },
+  {
+   "licenseId": "SHL-0.51"
+  },
+  {
+   "licenseId": "SimPL-2.0"
+  },
+  {
+   "licenseId": "SISSL"
+  },
+  {
+   "licenseId": "SISSL-1.2"
+  },
+  {
+   "licenseId": "Sleepycat"
+  },
+  {
+   "licenseId": "SMLNJ"
+  },
+  {
+   "licenseId": "SMPPL"
+  },
+  {
+   "licenseId": "SNIA"
+  },
+  {
+   "licenseId": "snprintf"
+  },
+  {
+   "licenseId": "Spencer-86"
+  },
+  {
+   "licenseId": "Spencer-94"
+  },
+  {
+   "licenseId": "Spencer-99"
+  },
+  {
+   "licenseId": "SPL-1.0"
+  },
+  {
+   "licenseId": "SSH-OpenSSH"
+  },
+  {
+   "licenseId": "SSH-short"
+  },
+  {
+   "licenseId": "SSPL-1.0"
+  },
+  {
+   "licenseId": "SugarCRM-1.1.3"
+  },
+  {
+   "licenseId": "SunPro"
+  },
+  {
+   "licenseId": "SWL"
+  },
+  {
+   "licenseId": "Symlinks"
+  },
+  {
+   "licenseId": "TAPR-OHL-1.0"
+  },
+  {
+   "licenseId": "TCL"
+  },
+  {
+   "licenseId": "TCP-wrappers"
+  },
+  {
+   "licenseId": "TermReadKey"
+  },
+  {
+   "licenseId": "TMate"
+  },
+  {
+   "licenseId": "TORQUE-1.1"
+  },
+  {
+   "licenseId": "TOSL"
+  },
+  {
+   "licenseId": "TPDL"
+  },
+  {
+   "licenseId": "TPL-1.0"
+  },
+  {
+   "licenseId": "TTWL"
+  },
+  {
+   "licenseId": "TU-Berlin-1.0"
+  },
+  {
+   "licenseId": "TU-Berlin-2.0"
+  },
+  {
+   "licenseId": "UCAR"
+  },
+  {
+   "licenseId": "UCL-1.0"
+  },
+  {
+   "licenseId": "Unicode-DFS-2015"
+  },
+  {
+   "licenseId": "Unicode-DFS-2016"
+  },
+  {
+   "licenseId": "Unicode-TOU"
+  },
+  {
+   "licenseId": "UnixCrypt"
+  },
+  {
+   "licenseId": "Unlicense"
+  },
+  {
+   "licenseId": "UPL-1.0"
+  },
+  {
+   "licenseId": "Vim"
+  },
+  {
+   "licenseId": "VOSTROM"
+  },
+  {
+   "licenseId": "VSL-1.0"
+  },
+  {
+   "licenseId": "W3C"
+  },
+  {
+   "licenseId": "W3C-19980720"
+  },
+  {
+   "licenseId": "W3C-20150513"
+  },
+  {
+   "licenseId": "w3m"
+  },
+  {
+   "licenseId": "Watcom-1.0"
+  },
+  {
+   "licenseId": "Widget-Workshop"
+  },
+  {
+   "licenseId": "Wsuipa"
+  },
+  {
+   "licenseId": "WTFPL"
+  },
+  {
+   "licenseId": "X11"
+  },
+  {
+   "licenseId": "X11-distribute-modifications-variant"
+  },
+  {
+   "licenseId": "Xdebug-1.03"
+  },
+  {
+   "licenseId": "Xerox"
+  },
+  {
+   "licenseId": "Xfig"
+  },
+  {
+   "licenseId": "XFree86-1.1"
+  },
+  {
+   "licenseId": "xinetd"
+  },
+  {
+   "licenseId": "xlock"
+  },
+  {
+   "licenseId": "Xnet"
+  },
+  {
+   "licenseId": "xpp"
+  },
+  {
+   "licenseId": "XSkat"
+  },
+  {
+   "licenseId": "YPL-1.0"
+  },
+  {
+   "licenseId": "YPL-1.1"
+  },
+  {
+   "licenseId": "Zed"
+  },
+  {
+   "licenseId": "Zend-2.0"
+  },
+  {
+   "licenseId": "Zimbra-1.3"
+  },
+  {
+   "licenseId": "Zimbra-1.4"
+  },
+  {
+   "licenseId": "Zlib"
+  },
+  {
+   "licenseId": "zlib-acknowledgement"
+  },
+  {
+   "licenseId": "ZPL-1.1"
+  },
+  {
+   "licenseId": "ZPL-2.0"
+  },
+  {
+   "licenseId": "ZPL-2.1"
+  },
+  {
+   "licenseId": "Ubuntu-font-1.0"
+  }
+ ]
+}
