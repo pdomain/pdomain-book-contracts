@@ -8,17 +8,22 @@ from collections import OrderedDict
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
 
-from pdomain_book_tools.pgdp.f2.offsets import read_lexical_f2_index
-from pdomain_book_tools.pgdp.f2.project_rules import ProjectRuleRegistry
-from pdomain_book_tools.pgdp.f2.tokens import F2TokenKind, read_f2_json_page
-from pdomain_book_tools.pgdp.f2.warnings import F2ParseWarning, warning_blocks_training
-from pdomain_book_tools.typography.labels import (
+from pdomain_book_contracts.sources.pgdp.f2.project_rules import ProjectRuleRegistry
+from pdomain_book_contracts.sources.pgdp.f2.tokens import F2TokenKind, read_f2_json_page
+from pdomain_book_contracts.sources.pgdp.f2.warnings import (
+    F2ParseWarning,
+    warning_blocks_training,
+)
+from pdomain_book_contracts.sources.pgdp.offsets import (
+    read_lexical_index as read_lexical_f2_index,
+)
+from pdomain_book_contracts.typography.labels import (
     ConfidenceTier,
     KnowledgeState,
     LabelSource,
     StyleLabel,
 )
-from pdomain_book_tools.typography.records import (
+from pdomain_book_contracts.typography.records import (
     ArtifactRef,
     Grapheme,
     ParserControlEvidence,
@@ -30,13 +35,21 @@ from pdomain_book_tools.typography.records import (
     TextIdentity,
     TypographyPageRecord,
 )
-from pdomain_book_tools.typography.spans import SourceSlice, StyleSpan, split_graphemes
+from pdomain_book_contracts.typography.spans import (
+    SourceSlice,
+    StyleSpan,
+    split_graphemes,
+)
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
-    from pdomain_book_tools.pgdp.f2.offsets import LexicalF2Index
-    from pdomain_book_tools.pgdp.f2.tokens import F2JsonPage, F2PageTokens, F2Token
+    from pdomain_book_contracts.sources.pgdp.f2.tokens import (
+        F2JsonPage,
+        F2PageTokens,
+        F2Token,
+    )
+    from pdomain_book_contracts.sources.pgdp.offsets import LexicalF2Index
 
 _STANDARD_TAG_LABELS = {
     "i": StyleLabel.ITALIC,

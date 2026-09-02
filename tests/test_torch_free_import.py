@@ -97,6 +97,7 @@ def test_every_subpackage_imports_without_heavy_stack() -> None:
         import pdomain_book_contracts.ocr
         import pdomain_book_contracts.layout
         import pdomain_book_contracts.sources.pgdp
+        import pdomain_book_contracts.sources.pgdp.f2
         import pdomain_book_contracts.licensing
         import pdomain_book_contracts._schemas
 
@@ -148,6 +149,7 @@ def test_numpy_loads_only_via_shapely() -> None:
         import pdomain_book_contracts.ocr
         import pdomain_book_contracts.layout
         import pdomain_book_contracts.sources.pgdp
+        import pdomain_book_contracts.sources.pgdp.f2
         import pdomain_book_contracts.licensing
         import pdomain_book_contracts._schemas
 

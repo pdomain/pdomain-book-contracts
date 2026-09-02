@@ -9,8 +9,8 @@ from typing import TYPE_CHECKING, Literal
 
 from pydantic import field_validator, model_validator
 
-from pdomain_book_tools.typography.labels import StyleLabel
-from pdomain_book_tools.typography.spans import CanonicalModel
+from pdomain_book_contracts.typography.labels import StyleLabel
+from pdomain_book_contracts.typography.spans import CanonicalModel
 
 if TYPE_CHECKING:
     from collections.abc import Sequence

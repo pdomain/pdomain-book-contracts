@@ -8,6 +8,7 @@ import pdomain_book_contracts.licensing
 import pdomain_book_contracts.matching
 import pdomain_book_contracts.ocr
 import pdomain_book_contracts.sources.pgdp
+import pdomain_book_contracts.sources.pgdp.f2
 import pdomain_book_contracts.text
 import pdomain_book_contracts.typography
 
@@ -26,6 +27,7 @@ def test_every_subpackage_has_a_docstring() -> None:
         pdomain_book_contracts.ocr,
         pdomain_book_contracts.layout,
         pdomain_book_contracts.sources.pgdp,
+        pdomain_book_contracts.sources.pgdp.f2,
         pdomain_book_contracts.licensing,
         pdomain_book_contracts._schemas,
     )

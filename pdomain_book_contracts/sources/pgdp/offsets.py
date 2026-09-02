@@ -1,11 +1,21 @@
-"""Lossless lexical access to JSON-encoded PGDP F2 page strings."""
+"""Lossless lexical access to the round-JSON container every PGDP round shares.
+
+Moved from ``pdomain_book_tools.pgdp.f2.offsets``, out of the ``f2``
+package: this module contains no F2 markup handling. It decodes generic
+JSON string bytes and tracks byte offsets into the object mapping page
+keys to page text that every PGDP round (F2, P3, ...) shares; only the
+markup inside a page's text differs by round. ``read_lexical_index``,
+``read_lexical_page`` and ``read_lexical_json`` lost the ``f2`` in their
+names for the same reason — ``pdomain-source-data`` already calls the
+first two of them against P3 artifacts, which carry no F2 markup at all.
+"""
 
 from __future__ import annotations
 
 import hashlib
 import string
 
-from pdomain_book_tools.typography.spans import CanonicalModel, SourceSlice
+from pdomain_book_contracts.typography.spans import CanonicalModel, SourceSlice
 
 
 class DecodedF2Character(CanonicalModel):
@@ -255,7 +265,7 @@ def _skip_json_string(payload: bytes, start: int) -> int:
     raise ValueError(msg)
 
 
-def read_lexical_f2_index(artifact_bytes: bytes) -> LexicalF2Index:
+def read_lexical_index(artifact_bytes: bytes) -> LexicalF2Index:
     """Index all F2 page strings without retaining their decoded character maps."""
     artifact_sha256 = hashlib.sha256(artifact_bytes).hexdigest()
     index = _skip_whitespace(artifact_bytes, 0)
@@ -308,7 +318,7 @@ def read_lexical_f2_index(artifact_bytes: bytes) -> LexicalF2Index:
     return LexicalF2Index(artifact_sha256=artifact_sha256, pages=tuple(pages))
 
 
-def read_lexical_f2_page(
+def read_lexical_page(
     artifact_bytes: bytes,
     page_key: str,
     index: LexicalF2Index,
@@ -340,7 +350,7 @@ def read_lexical_f2_page(
     )
 
 
-def read_lexical_f2_json(artifact_bytes: bytes) -> LexicalF2Document:
+def read_lexical_json(artifact_bytes: bytes) -> LexicalF2Document:
     """Read F2 pages and retain exact artifact locations for every character."""
     artifact_sha256 = hashlib.sha256(artifact_bytes).hexdigest()
     index = _skip_whitespace(artifact_bytes, 0)

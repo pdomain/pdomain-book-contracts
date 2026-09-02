@@ -10,18 +10,21 @@ from typing import TYPE_CHECKING
 
 import regex
 
-from pdomain_book_tools.pgdp.f2.offsets import (
+from pdomain_book_contracts.sources.pgdp.offsets import (
     DecodedF2Character,
-    read_lexical_f2_json,
-    read_lexical_f2_page,
+    read_lexical_json,
+    read_lexical_page,
 )
-from pdomain_book_tools.typography.records import Grapheme
-from pdomain_book_tools.typography.spans import CanonicalModel, SourceSlice
+from pdomain_book_contracts.typography.records import Grapheme
+from pdomain_book_contracts.typography.spans import CanonicalModel, SourceSlice
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
 
-    from pdomain_book_tools.pgdp.f2.offsets import LexicalF2Index, LexicalF2Page
+    from pdomain_book_contracts.sources.pgdp.offsets import (
+        LexicalF2Index,
+        LexicalF2Page,
+    )
 
 F2_TOKENIZER_VERSION = f"f2-tokenizer-1+regex-{regex.__version__}"
 _KNOWN_TAGS = frozenset({"i", "b", "sc", "g", "f", "u"})
@@ -152,7 +155,13 @@ def _append_graphemes(
     visible_text = "".join(character.text for character in visible_characters)
     graphemes: list[Grapheme] = []
     character_index = 0
-    for grapheme_text in regex.findall(r"\X", visible_text):
+    # regex.findall()'s stub returns list[Any] (its true return shape depends
+    # on the pattern's capture-group config); this pattern has no groups, so
+    # narrow the actual list[str] result once here rather than letting Any
+    # spread into grapheme_text below (reportAny, strict in this package
+    # but not enabled in pdomain-book-tools — found landing Task 4 Step 3).
+    found_graphemes: list[str] = regex.findall(r"\X", visible_text)
+    for grapheme_text in found_graphemes:
         length = len(grapheme_text)
         members = visible_characters[character_index : character_index + length]
         if "".join(member.text for member in members) != grapheme_text:
@@ -688,7 +697,7 @@ def _tokenize_lexical_page(page: LexicalF2Page, artifact_sha256: str) -> F2JsonP
 
 def read_f2_json(artifact_bytes: bytes) -> F2JsonDocument:
     """Read full F2 JSON bytes and tokenize every page without reserialization."""
-    lexical_document = read_lexical_f2_json(artifact_bytes)
+    lexical_document = read_lexical_json(artifact_bytes)
     return F2JsonDocument(
         artifact_sha256=lexical_document.artifact_sha256,
         pages=tuple(
@@ -704,5 +713,5 @@ def read_f2_json_page(
     index: LexicalF2Index,
 ) -> F2JsonPage:
     """Tokenize exactly one page from a lightweight lexical F2 index."""
-    lexical_page = read_lexical_f2_page(artifact_bytes, page_key, index)
+    lexical_page = read_lexical_page(artifact_bytes, page_key, index)
     return _tokenize_lexical_page(lexical_page, index.artifact_sha256)

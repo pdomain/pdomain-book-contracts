@@ -96,6 +96,15 @@ convention = "google"
 # mutable class attributes. Carried over verbatim from pdomain-book-tools'
 # own per-file-ignore for this file at its old path.
 "pdomain_book_contracts/matching/character_groups.py" = ["RUF012"]
+# Carried over verbatim from pdomain-book-tools' own per-file-ignore for
+# this file at its old path (pdomain_book_tools/pgdp/pgdp_results.py),
+# pre-dating its 2026-05-17 strict-linting rollout. Discovered landing
+# Task 4 Step 3: only D101/D102 (missing docstrings on the pre-strict
+# PGDPResults/PGDPExport classes and their methods) actually fire here —
+# the other categories in book-tools' original ignore list (ANN, G003,
+# G004, BLE001, TRY, PERF401, S108) do not apply to this file's content,
+# so they are not carried over.
+"pdomain_book_contracts/sources/pgdp/rounds.py" = ["D101", "D102"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["pdomain_book_contracts"]
