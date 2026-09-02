@@ -10,7 +10,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from difflib import SequenceMatcher
 from enum import StrEnum
-from typing import TYPE_CHECKING, Protocol, TypedDict
+from typing import TYPE_CHECKING, Generic, Protocol, TypedDict, TypeVar
 
 from pdomain_book_contracts.matching.match_type import MatchType
 from pdomain_book_contracts.matching.models import (
@@ -40,37 +40,96 @@ class _MatchableWord(Protocol):
     precise; ``typography_annotations`` gets the real
     ``pdomain_book_contracts.typography.annotations.TypographyAnnotations``
     type because that class now lives in this package.
+
+    Every member this module only reads is declared as a read-only
+    ``@property`` rather than a plain attribute: a Protocol's plain
+    attributes are invariant (readable *and* writable), so ``Word.text``
+    (also read-only there — the mutable text lives in ``ground_truth_text``)
+    would otherwise need to match this type exactly rather than merely be
+    assignable to it, and the same goes for ``Word.review`` (concrete type
+    ``ReviewMetadata | None``, narrower than this Protocol's ``object |
+    None``) — real callers passing a real ``Word`` failed exactly this way
+    under basedpyright until this was corrected.
+
+    ``ground_truth_text``, which this module assigns
+    (``word.ground_truth_text = ...``), is a ``@property`` with both a
+    getter and a setter here too, rather than a plain attribute — because
+    ``Word.ground_truth_text`` is itself a real ``@property`` (its backing
+    field is ``_ground_truth_text``), and basedpyright does not treat a
+    plain Protocol attribute as satisfied by a same-typed concrete
+    property even when both are mutable (verified: a real ``Word`` failed
+    this exact check with a bare ``ground_truth_text: str`` attribute
+    declaration, with error "'property' is not assignable to 'str'";
+    declaring the matching getter/setter pair here fixed it). This is a
+    basedpyright-specific matching rule, not a soundness requirement this
+    module's own code imposes.
     """
 
-    text: str
-    ground_truth_text: str
-    ground_truth_match_keys: dict[str, object]
-    review: object | None
-    typography_annotations: TypographyAnnotations | None
-    glyph_annotations: object | None
+    @property
+    def text(self) -> str: ...
+
+    @property
+    def ground_truth_text(self) -> str: ...
+    @ground_truth_text.setter
+    def ground_truth_text(self, value: str) -> None: ...
+
+    @property
+    def ground_truth_match_keys(self) -> dict[str, object]: ...
+    @property
+    def review(self) -> object | None: ...
+    @property
+    def typography_annotations(self) -> TypographyAnnotations | None: ...
+    @property
+    def glyph_annotations(self) -> object | None: ...
 
     def merge(self, word_to_merge: _MatchableWord) -> None: ...
 
 
-class _MatchableLine(Protocol):
+_WordT = TypeVar("_WordT", bound=_MatchableWord)
+
+
+class _MatchableLine(Protocol[_WordT]):
     """Structural surface this module needs from a mutable OCR line.
 
     A "line" here is a words-only ``pdomain_book_tools.ocr.block.Block``.
+
+    Generic in the word type, and so is every function below that touches a
+    line: ``Block.remove_item`` accepts ``Word | Block``, not an arbitrary
+    ``_MatchableWord`` — a plain (non-generic) ``_MatchableWord``-typed
+    parameter here cannot satisfy that by contravariance, since not every
+    ``_MatchableWord`` is a ``Word | Block``. Binding this protocol's own
+    ``_WordT`` to the real word type at each call site (``Word``, inferred
+    from the concrete ``Block``/``Page`` passed in) makes the parameter
+    ``Word``, which *is* one of ``Word | Block``'s members, so the check
+    holds. Verified against a real caller
+    (``pdomain_book_tools/ocr/ground_truth_matching.py``) under
+    basedpyright; the non-generic version failed there.
     """
 
-    words: Sequence[_MatchableWord]
+    @property
+    def words(self) -> Sequence[_WordT]: ...
+
     base_ground_truth_text: str | None
-    review: object | None
 
-    def remove_item(self, item: _MatchableWord) -> None: ...
+    @property
+    def review(self) -> object | None: ...
+
+    def remove_item(self, item: _WordT) -> None: ...
 
 
-class _MatchablePage(Protocol):
-    """Structural surface this module needs from a mutable OCR page."""
+class _MatchablePage(Protocol[_WordT]):
+    """Structural surface this module needs from a mutable OCR page.
 
-    page_index: int
-    lines: Sequence[_MatchableLine]
-    review: object | None
+    Generic for the same reason as :class:`_MatchableLine`; see its
+    docstring.
+    """
+
+    @property
+    def page_index(self) -> int: ...
+    @property
+    def lines(self) -> Sequence[_MatchableLine[_WordT]]: ...
+    @property
+    def review(self) -> object | None: ...
 
 
 class LegacyDocumentSide(StrEnum):
@@ -114,15 +173,15 @@ class LegacyProjectionResult:
 
 
 @dataclass(frozen=True)
-class _WordLocation:
+class _WordLocation(Generic[_WordT]):
     """One pre-projection physical-word location in a legacy page."""
 
     line_index: int
-    word: _MatchableWord
+    word: _WordT
 
 
 def legacy_page_to_match_document(
-    page: _MatchablePage, *, document_id: str
+    page: _MatchablePage[_WordT], *, document_id: str
 ) -> MatchDocument:
     """Snapshot one legacy page as a source-neutral immutable match document.
 
@@ -151,7 +210,7 @@ def legacy_page_to_match_document(
 
 
 def project_match_graph_onto_page(
-    page: _MatchablePage,
+    page: _MatchablePage[_WordT],
     graph: MatchGraph,
     *,
     document_id: str,
@@ -279,8 +338,8 @@ def _graph_document(
 
 
 def _word_locations(
-    page: _MatchablePage, *, document_id: str
-) -> dict[str, _WordLocation]:
+    page: _MatchablePage[_WordT], *, document_id: str
+) -> dict[str, _WordLocation[_WordT]]:
     """Return the exact pre-projection physical page locations by token ID."""
     page_id = f"{document_id}:page:{page.page_index}"
     return {
@@ -332,7 +391,7 @@ def _tokens_by_id(document: MatchDocument) -> dict[str, MatchToken]:
     }
 
 
-def _has_manual_split(locations: tuple[_WordLocation, ...]) -> bool:
+def _has_manual_split(locations: tuple[_WordLocation[_WordT], ...]) -> bool:
     """Return whether a caller has explicitly protected one physical word."""
     return any(
         bool(location.word.ground_truth_match_keys.get("split"))
@@ -340,7 +399,7 @@ def _has_manual_split(locations: tuple[_WordLocation, ...]) -> bool:
     )
 
 
-def _has_protected_word_state(locations: tuple[_WordLocation, ...]) -> bool:
+def _has_protected_word_state(locations: tuple[_WordLocation[_WordT], ...]) -> bool:
     """Return whether a topology merge would discard protected word state."""
     return any(
         location.word.review is not None
@@ -351,8 +410,8 @@ def _has_protected_word_state(locations: tuple[_WordLocation, ...]) -> bool:
 
 
 def _has_container_review(
-    page: _MatchablePage,
-    locations: tuple[_WordLocation, ...],
+    page: _MatchablePage[_WordT],
+    locations: tuple[_WordLocation[_WordT], ...],
 ) -> bool:
     """Return whether page or involved-line review protects physical topology."""
     return page.review is not None or any(
@@ -361,9 +420,9 @@ def _has_container_review(
 
 
 def _contiguous_line(
-    page: _MatchablePage,
-    locations: tuple[_WordLocation, ...],
-) -> _MatchableLine | None:
+    page: _MatchablePage[_WordT],
+    locations: tuple[_WordLocation[_WordT], ...],
+) -> _MatchableLine[_WordT] | None:
     """Return the shared line when locations are contiguous in page order."""
     line_indexes = {location.line_index for location in locations}
     if len(line_indexes) != 1:
@@ -385,7 +444,7 @@ def _contiguous_line(
     return line
 
 
-def _current_word_index(line: _MatchableLine, word: _MatchableWord) -> int | None:
+def _current_word_index(line: _MatchableLine[_WordT], word: _WordT) -> int | None:
     """Return a word's current index by identity after earlier page mutation."""
     for index, candidate in enumerate(line.words):
         if candidate is word:
@@ -394,8 +453,8 @@ def _current_word_index(line: _MatchableLine, word: _MatchableWord) -> int | Non
 
 
 def _combine_page_words(
-    line: _MatchableLine, locations: tuple[_WordLocation, ...]
-) -> _MatchableWord:
+    line: _MatchableLine[_WordT], locations: tuple[_WordLocation[_WordT], ...]
+) -> _WordT:
     """Merge one contiguous physical page-word run into its first word."""
     words = tuple(location.word for location in locations)
     anchor = words[0]
@@ -427,7 +486,7 @@ def _apply_in_place(
 
 
 def _record_skipped_relation(
-    locations: tuple[_WordLocation, ...],
+    locations: tuple[_WordLocation[_WordT], ...],
     *,
     graph: MatchGraph,
     relation: MatchRelation,
