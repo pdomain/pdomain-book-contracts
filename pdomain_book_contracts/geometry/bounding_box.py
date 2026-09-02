@@ -23,8 +23,8 @@ from shapely.geometry import (
 )
 from shapely.ops import unary_union  # removed split import
 
-from pdomain_book_tools.geometry.point import Point
-from pdomain_book_tools.schemas._helpers import NUMBER_SCHEMA
+from pdomain_book_contracts._schemas import NUMBER_SCHEMA
+from pdomain_book_contracts.geometry.point import Point
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Sequence
@@ -597,9 +597,11 @@ class BoundingBox:
         compatibility (R-01/R-03).
         """
         # Local import to avoid a cycle: image_ops imports BoundingBox.
-        from pdomain_book_tools.geometry.image_ops import refine_bbox
+        from pdomain_book_tools.geometry.image_ops import (  # pyright: ignore[reportMissingImports]
+            refine_bbox,  # pyright: ignore[reportUnknownVariableType]
+        )
 
-        return refine_bbox(
+        return refine_bbox(  # pyright: ignore[reportUnknownVariableType]
             self,
             image,
             padding_px=padding_px,
@@ -614,9 +616,11 @@ class BoundingBox:
         that directly in new code. This wrapper is preserved for
         backward compatibility (R-01/R-03).
         """
-        from pdomain_book_tools.geometry.image_ops import crop_bottom_bbox
+        from pdomain_book_tools.geometry.image_ops import (  # pyright: ignore[reportMissingImports]
+            crop_bottom_bbox,  # pyright: ignore[reportUnknownVariableType]
+        )
 
-        return crop_bottom_bbox(self, image)
+        return crop_bottom_bbox(self, image)  # pyright: ignore[reportUnknownVariableType]
 
     def crop_top(self, image: ndarray) -> BoundingBox:
         """Return a new bbox cropped to the top half of its image content.
@@ -626,9 +630,11 @@ class BoundingBox:
         that directly in new code. This wrapper is preserved for
         backward compatibility (R-01/R-03).
         """
-        from pdomain_book_tools.geometry.image_ops import crop_top_bbox
+        from pdomain_book_tools.geometry.image_ops import (  # pyright: ignore[reportMissingImports]
+            crop_top_bbox,  # pyright: ignore[reportUnknownVariableType]
+        )
 
-        return crop_top_bbox(self, image)
+        return crop_top_bbox(self, image)  # pyright: ignore[reportUnknownVariableType]
 
     def clamp_to_image(self, width: int, height: int) -> BoundingBox | None:
         """Return new box clamped to [0,width]x[0,height] in pixel or [0,1] if normalized.

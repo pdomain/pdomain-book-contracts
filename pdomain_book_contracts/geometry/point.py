@@ -10,7 +10,7 @@ from pydantic import GetCoreSchemaHandler
 from pydantic_core import CoreSchema, core_schema
 from shapely.geometry import Point as ShapelyPoint
 
-from pdomain_book_tools.schemas._helpers import NUMBER_SCHEMA
+from pdomain_book_contracts._schemas import NUMBER_SCHEMA
 
 # Wire shape for a Point dict — extracted as a module-level constant so
 # composite models (BoundingBox, etc.) can embed Point's shape without

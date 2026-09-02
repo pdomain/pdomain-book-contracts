@@ -15,6 +15,7 @@ dependencies = [
     "pydantic-core>=2.27,<3",
     "regex>=2024.11.6,<2025.0.0",
     "shapely>=2.0,<3",
+    "typing-extensions>=4.12,<5",
 ]
 
 [dependency-groups]
@@ -43,10 +44,29 @@ select = [
 ignore = [
     "D100", "D104", "D105", "D107", "D203", "D205", "D212", "E501", "PLR2004",
     "TRY003",
+    # PLC0415 (import-not-at-top-level): pdomain-book-tools ignores this
+    # repo-wide for the same reason it recurs here — deferred imports break
+    # circular deps and avoid loading optional-heavy modules until needed.
+    # geometry/bounding_box.py's refine()/crop_top()/crop_bottom() import
+    # pdomain_book_tools.geometry.image_ops (cv2) lazily, by design: these
+    # are back-compat wrappers, and this package must stay importable
+    # without an imaging stack, so the import cannot move to module level.
+    "PLC0415",
 ]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
 
 [tool.ruff.lint.per-file-ignores]
 "tests/**/*.py" = ["ANN", "D", "PLR2004", "S101", "S108"]
+# Legacy per-file exemptions carried over verbatim from pdomain-book-tools'
+# own per-file-ignores for these two files (pre-dating its 2026-05-17
+# strict-linting rollout), so the Task 4 Step 1 move commit can rewrite
+# imports only and leave method bodies untouched. minX/minY/maxX/maxY
+# (N802) and EPS (N806) are an existing public/local naming choice, not
+# something a reorganisation commit may rename.
+"pdomain_book_contracts/geometry/bounding_box.py" = ["D102", "N802"]
+"pdomain_book_contracts/geometry/point.py" = ["D102", "N806"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["pdomain_book_contracts"]

@@ -19,13 +19,14 @@ on, so numpy is deliberately left out of the meta-path block list below.
 What this test actually enforces: torch, doctr, torchvision, cv2, pandas,
 matplotlib, and transformers can never load, under any import path, because
 nothing in this package's declared dependency set could legitimately need
-them. Numpy is checked separately, and only as a today-true assertion: this
-package currently imports no shapely-backed code, so ``numpy`` should not
-appear in ``sys.modules`` either. That assertion is expected to need revision
-once a subpackage (most likely ``geometry``) starts using shapely, at which
-point numpy will legitimately load as shapely's own transitive dependency —
-this test does not, and cannot, guarantee numpy will never load; it only
-guarantees the seven modules above never will.
+them. Numpy is checked separately. ``geometry`` (``Point``, ``BoundingBox``)
+now imports ``shapely.geometry`` at module level, so numpy is expected to
+appear in ``sys.modules`` as shapely's own transitive dependency — the
+"today-true, no-shapely-yet" assertion this test used to make is gone;
+``test_numpy_loads_only_via_shapely`` below asserts the positive fact that
+replaced it, and ties the loaded numpy back to shapely rather than to some
+other, unaccounted-for import path. This test does not, and cannot, guarantee
+numpy will never load; it only guarantees the seven modules above never will.
 """
 
 from __future__ import annotations
@@ -109,14 +110,34 @@ def test_every_subpackage_imports_without_heavy_stack() -> None:
     assert "OK" in result.stdout
 
 
-def test_numpy_not_loaded_today() -> None:
-    """Today, with no shapely-backed contract yet moved in, numpy stays out.
+def test_numpy_loads_only_via_shapely() -> None:
+    """``geometry`` now uses shapely, so numpy loads — but only through it.
 
-    See the module docstring: this is a today-true assertion about the
-    package's current transitive weight, not a structural guarantee. It will
-    need revising once a subpackage imports shapely, which legitimately pulls
-    in numpy on its own.
+    ``pdomain_book_contracts.geometry.point`` and ``.bounding_box`` import
+    ``shapely.geometry`` at module level (see the module docstring), so this
+    package no longer stays numpy-free: shapely pulls numpy in as its own
+    transitive dependency the moment ``geometry`` is imported. The old
+    negative assertion ("numpy never loads") went stale the moment that
+    landed; what stays true and worth enforcing is narrower — that importing
+    the full package loads numpy in the same subprocess where importing bare
+    ``shapely`` also loads numpy, i.e. nothing in this package's own code
+    reaches for numpy directly. Only ``geometry`` needs shapely; the other
+    subpackages (``text``, ``typography``, ``matching``, ``ocr``, ``layout``,
+    ``sources.pgdp``, ``licensing``, ``_schemas``) do not import it, so their
+    imports are exercised here too as a check that none of them pulls numpy
+    in some other way.
     """
+    result = _run(
+        """
+        import shapely  # noqa: F401 - establishes the numpy-via-shapely baseline
+
+        assert "numpy" in sys.modules, "shapely no longer pulls in numpy; re-check this test's premise"
+        print("BASELINE-OK")
+        """
+    )
+    assert result.returncode == 0, result.stderr
+    assert "BASELINE-OK" in result.stdout
+
     result = _run(
         """
         import pdomain_book_contracts
@@ -130,7 +151,8 @@ def test_numpy_not_loaded_today() -> None:
         import pdomain_book_contracts.licensing
         import pdomain_book_contracts._schemas
 
-        assert "numpy" not in sys.modules, "numpy was imported by the current empty skeleton"
+        assert "shapely" in sys.modules, "geometry no longer imports shapely; re-check this test's premise"
+        assert "numpy" in sys.modules, "numpy did not load even though shapely, which pulls it in, did"
         print("OK")
         """
     )

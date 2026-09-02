@@ -173,6 +173,7 @@ dependencies = [
     { name = "pydantic-core" },
     { name = "regex" },
     { name = "shapely" },
+    { name = "typing-extensions" },
 ]
 
 [package.dev-dependencies]
@@ -188,6 +189,7 @@ requires-dist = [
     { name = "pydantic-core", specifier = ">=2.27,<3" },
     { name = "regex", specifier = ">=2024.11.6,<2025.0.0" },
     { name = "shapely", specifier = ">=2.0,<3" },
+    { name = "typing-extensions", specifier = ">=4.12,<5" },
 ]
 
 [package.metadata.requires-dev]
