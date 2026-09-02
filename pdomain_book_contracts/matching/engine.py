@@ -30,7 +30,7 @@ from pdomain_book_contracts.matching.pgdp_continuations import (
     PgdpContinuationDecision,
     build_pgdp_surface_document,
 )
-from pdomain_book_contracts.text.normalization import (
+from pdomain_book_contracts.typography.normalization import (
     ComparisonView,
     build_comparison_view,
 )

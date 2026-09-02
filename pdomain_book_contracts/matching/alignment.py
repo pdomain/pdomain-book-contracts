@@ -8,7 +8,7 @@ from typing import Annotated, Self
 from pydantic import Field, field_validator, model_validator
 
 from pdomain_book_contracts.geometry.bounding_box import BoundingBox
-from pdomain_book_contracts.text.normalization import (
+from pdomain_book_contracts.typography.normalization import (
     ComparisonOperation,
     ComparisonOperationKind,
     ComparisonView,

@@ -22,8 +22,8 @@ from pydantic import Field, field_serializer, field_validator, model_validator
 from pydantic_core import PydanticCustomError
 
 from pdomain_book_contracts.geometry.bounding_box import BoundingBox
-from pdomain_book_contracts.text.normalization import ComparisonOperation
 from pdomain_book_contracts.typography.exchange import ArtifactReference
+from pdomain_book_contracts.typography.normalization import ComparisonOperation
 from pdomain_book_contracts.typography.spans import (
     CanonicalModel,
     SourceSlice,

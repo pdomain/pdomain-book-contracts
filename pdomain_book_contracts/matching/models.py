@@ -17,7 +17,7 @@ else:
 
 from pydantic import Field, field_validator, model_validator
 
-from pdomain_book_contracts.text.normalization import ComparisonView
+from pdomain_book_contracts.typography.normalization import ComparisonView
 from pdomain_book_contracts.typography.spans import CanonicalModel, split_graphemes
 
 if TYPE_CHECKING:
