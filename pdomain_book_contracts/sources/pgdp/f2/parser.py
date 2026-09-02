@@ -14,9 +14,7 @@ from pdomain_book_contracts.sources.pgdp.f2.warnings import (
     F2ParseWarning,
     warning_blocks_training,
 )
-from pdomain_book_contracts.sources.pgdp.offsets import (
-    read_lexical_index as read_lexical_f2_index,
-)
+from pdomain_book_contracts.sources.pgdp.offsets import read_lexical_index
 from pdomain_book_contracts.typography.labels import (
     ConfidenceTier,
     KnowledgeState,
@@ -394,6 +392,12 @@ def _training_eligible(warnings: Sequence[str]) -> bool:
     return not any(warning_blocks_training(code) for code in warnings)
 
 
+# ``read_lexical_index`` and ``read_f2_json_page`` are named here deliberately.
+# They are imported rather than defined, but ``F2Parser.parse_page`` calls them
+# through this module's globals, so they are part of what this module exposes.
+__all__ = ["F2Parser", "read_f2_json_page", "read_lexical_index"]
+
+
 class F2Parser:
     """Build page-local typography records from lossless PGDP F2 tokens."""
 
@@ -416,7 +420,7 @@ class F2Parser:
         if cached is not None:
             self._index_cache.move_to_end(artifact_sha256)
             return cached
-        index = read_lexical_f2_index(artifact_bytes)
+        index = read_lexical_index(artifact_bytes)
         self._index_cache[artifact_sha256] = index
         if len(self._index_cache) > self._document_cache_size:
             self._index_cache.popitem(last=False)
