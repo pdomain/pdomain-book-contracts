@@ -4,20 +4,26 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 from dataclasses import dataclass
 from enum import StrEnum
-from typing import TYPE_CHECKING, Self, override
+from typing import TYPE_CHECKING, Self
+
+if sys.version_info >= (3, 12):
+    from typing import override
+else:
+    from typing_extensions import override  # pyright: ignore[reportUnreachable]
 
 from pydantic import Field, field_validator, model_validator
 
-from pdomain_book_tools.matching.models import (
+from pdomain_book_contracts.matching.models import (
     ArtifactRange,
     MatchDocument,
     MatchLine,
     MatchPage,
     MatchToken,
 )
-from pdomain_book_tools.typography.spans import CanonicalModel, split_graphemes
+from pdomain_book_contracts.typography.spans import CanonicalModel, split_graphemes
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Mapping

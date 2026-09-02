@@ -6,8 +6,8 @@ from typing import Annotated, Self
 
 from pydantic import Field, model_validator
 
-from pdomain_book_tools.typography.labels import KnowledgeState, StyleLabel
-from pdomain_book_tools.typography.spans import (
+from pdomain_book_contracts.typography.labels import KnowledgeState, StyleLabel
+from pdomain_book_contracts.typography.spans import (
     CanonicalModel,
     StyleSpan,
     split_graphemes,

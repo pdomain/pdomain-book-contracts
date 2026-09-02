@@ -3,13 +3,22 @@
 from __future__ import annotations
 
 import hashlib
-from typing import TYPE_CHECKING, Annotated, Self, override
+import sys
+from typing import TYPE_CHECKING, Annotated, Self
+
+if sys.version_info >= (3, 12):
+    from typing import override
+else:
+    from typing_extensions import override  # pyright: ignore[reportUnreachable]
 
 from pydantic import Field, ValidationInfo, field_validator, model_validator
 
-from pdomain_book_tools.typography.exchange import ArtifactReference
-from pdomain_book_tools.typography.review import canonical_json_bytes, validate_sha256
-from pdomain_book_tools.typography.spans import CanonicalModel
+from pdomain_book_contracts.typography.exchange import ArtifactReference
+from pdomain_book_contracts.typography.review import (
+    canonical_json_bytes,
+    validate_sha256,
+)
+from pdomain_book_contracts.typography.spans import CanonicalModel
 
 if TYPE_CHECKING:
     from collections.abc import Mapping

@@ -7,21 +7,21 @@ from typing import Annotated, Self
 
 from pydantic import Field, field_validator, model_validator
 
-from pdomain_book_tools.geometry.bounding_box import BoundingBox
-from pdomain_book_tools.typography.normalization import (
+from pdomain_book_contracts.geometry.bounding_box import BoundingBox
+from pdomain_book_contracts.text.normalization import (
     ComparisonOperation,
     ComparisonOperationKind,
     ComparisonView,
     build_comparison_view,
 )
-from pdomain_book_tools.typography.records import (
+from pdomain_book_contracts.typography.records import (
     AlignmentEvidence,
     AlignmentPathOperation,
     OcrTokenRef,
     SourceCoordinateSpace,
     TargetCoordinateSpace,
 )
-from pdomain_book_tools.typography.spans import (
+from pdomain_book_contracts.typography.spans import (
     CanonicalModel,
     StyleSpan,
     split_graphemes,

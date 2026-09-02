@@ -7,7 +7,7 @@ from typing import Annotated, Self
 import regex
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
-from pdomain_book_tools.typography.labels import (
+from pdomain_book_contracts.typography.labels import (
     ConfidenceTier,
     KnowledgeState,
     LabelSource,

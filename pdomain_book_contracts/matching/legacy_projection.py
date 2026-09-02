@@ -10,9 +10,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from difflib import SequenceMatcher
 from enum import StrEnum
-from typing import TYPE_CHECKING, TypedDict
+from typing import TYPE_CHECKING, Protocol, TypedDict
 
-from pdomain_book_tools.matching.models import (
+from pdomain_book_contracts.matching.match_type import MatchType
+from pdomain_book_contracts.matching.models import (
     MatchDocument,
     MatchGraph,
     MatchLine,
@@ -20,14 +21,56 @@ from pdomain_book_tools.matching.models import (
     MatchRelation,
     MatchToken,
 )
-from pdomain_book_tools.ocr.ground_truth_matching_helpers.match_type import MatchType
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Sequence
 
-    from pdomain_book_tools.ocr.block import Block
-    from pdomain_book_tools.ocr.page import Page
-    from pdomain_book_tools.ocr.word import Word
+    from pdomain_book_contracts.typography.annotations import TypographyAnnotations
+
+
+class _MatchableWord(Protocol):
+    """Structural surface this module needs from a mutable OCR word.
+
+    ``pdomain_book_tools.ocr.word.Word`` satisfies this structurally — the
+    contracts package never imports it, so the one-way dependency direction
+    holds even in this module, the sole compatibility boundary that touches
+    mutable OCR objects at all. Only ``is None`` is ever checked on
+    ``review`` and ``glyph_annotations``, so those two stay ``object | None``
+    rather than importing the book-tools types that would make the check
+    precise; ``typography_annotations`` gets the real
+    ``pdomain_book_contracts.typography.annotations.TypographyAnnotations``
+    type because that class now lives in this package.
+    """
+
+    text: str
+    ground_truth_text: str
+    ground_truth_match_keys: dict[str, object]
+    review: object | None
+    typography_annotations: TypographyAnnotations | None
+    glyph_annotations: object | None
+
+    def merge(self, word_to_merge: _MatchableWord) -> None: ...
+
+
+class _MatchableLine(Protocol):
+    """Structural surface this module needs from a mutable OCR line.
+
+    A "line" here is a words-only ``pdomain_book_tools.ocr.block.Block``.
+    """
+
+    words: Sequence[_MatchableWord]
+    base_ground_truth_text: str | None
+    review: object | None
+
+    def remove_item(self, item: _MatchableWord) -> None: ...
+
+
+class _MatchablePage(Protocol):
+    """Structural surface this module needs from a mutable OCR page."""
+
+    page_index: int
+    lines: Sequence[_MatchableLine]
+    review: object | None
 
 
 class LegacyDocumentSide(StrEnum):
@@ -49,7 +92,7 @@ class LegacyProjectionMutation(StrEnum):
 
 
 class LegacyMatchEvidence(TypedDict):
-    """Typed keys stored in ``Word.ground_truth_match_keys`` by this adapter."""
+    """Typed keys stored in a word's ``ground_truth_match_keys`` by this adapter."""
 
     match_type: str
     match_score: int
@@ -75,10 +118,12 @@ class _WordLocation:
     """One pre-projection physical-word location in a legacy page."""
 
     line_index: int
-    word: Word
+    word: _MatchableWord
 
 
-def legacy_page_to_match_document(page: Page, *, document_id: str) -> MatchDocument:
+def legacy_page_to_match_document(
+    page: _MatchablePage, *, document_id: str
+) -> MatchDocument:
     """Snapshot one legacy page as a source-neutral immutable match document.
 
     Token identities encode the page index and physical line/word positions.
@@ -106,7 +151,7 @@ def legacy_page_to_match_document(page: Page, *, document_id: str) -> MatchDocum
 
 
 def project_match_graph_onto_page(
-    page: Page,
+    page: _MatchablePage,
     graph: MatchGraph,
     *,
     document_id: str,
@@ -233,7 +278,9 @@ def _graph_document(
     return graph.target_document
 
 
-def _word_locations(page: Page, *, document_id: str) -> dict[str, _WordLocation]:
+def _word_locations(
+    page: _MatchablePage, *, document_id: str
+) -> dict[str, _WordLocation]:
     """Return the exact pre-projection physical page locations by token ID."""
     page_id = f"{document_id}:page:{page.page_index}"
     return {
@@ -304,7 +351,7 @@ def _has_protected_word_state(locations: tuple[_WordLocation, ...]) -> bool:
 
 
 def _has_container_review(
-    page: Page,
+    page: _MatchablePage,
     locations: tuple[_WordLocation, ...],
 ) -> bool:
     """Return whether page or involved-line review protects physical topology."""
@@ -314,9 +361,9 @@ def _has_container_review(
 
 
 def _contiguous_line(
-    page: Page,
+    page: _MatchablePage,
     locations: tuple[_WordLocation, ...],
-) -> Block | None:
+) -> _MatchableLine | None:
     """Return the shared line when locations are contiguous in page order."""
     line_indexes = {location.line_index for location in locations}
     if len(line_indexes) != 1:
@@ -338,7 +385,7 @@ def _contiguous_line(
     return line
 
 
-def _current_word_index(line: Block, word: Word) -> int | None:
+def _current_word_index(line: _MatchableLine, word: _MatchableWord) -> int | None:
     """Return a word's current index by identity after earlier page mutation."""
     for index, candidate in enumerate(line.words):
         if candidate is word:
@@ -346,7 +393,9 @@ def _current_word_index(line: Block, word: Word) -> int | None:
     return None
 
 
-def _combine_page_words(line: Block, locations: tuple[_WordLocation, ...]) -> Word:
+def _combine_page_words(
+    line: _MatchableLine, locations: tuple[_WordLocation, ...]
+) -> _MatchableWord:
     """Merge one contiguous physical page-word run into its first word."""
     words = tuple(location.word for location in locations)
     anchor = words[0]
@@ -357,7 +406,7 @@ def _combine_page_words(line: Block, locations: tuple[_WordLocation, ...]) -> Wo
 
 
 def _apply_in_place(
-    word: Word,
+    word: _MatchableWord,
     *,
     graph: MatchGraph,
     relation: MatchRelation,
@@ -398,7 +447,7 @@ def _record_skipped_relation(
 
 
 def _write_evidence(
-    word: Word,
+    word: _MatchableWord,
     *,
     graph: MatchGraph,
     relation: MatchRelation,

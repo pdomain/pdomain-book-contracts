@@ -35,6 +35,20 @@ exclude = ["**/.venv", "**/.venv-container"]
 target-version = "py311"
 extend-exclude = ["*.md"]
 
+[tool.ruff.lint.flake8-type-checking]
+# Missing from the Task 3 skeleton pyproject.toml; carried over from
+# pdomain-book-tools' own identical setting (same path, contracts prefix),
+# discovered landing Task 4 Step 2. CanonicalModel is a pydantic BaseModel
+# subclass that other typography/matching/text models inherit from; without
+# this, ruff's TC001/TC003 rules push their field-type imports (and stdlib
+# collections.abc imports used the same way) into `TYPE_CHECKING`, which
+# breaks pydantic's runtime schema construction under
+# `from __future__ import annotations` — those imports must stay real.
+runtime-evaluated-base-classes = [
+    "pdomain_book_contracts.typography.spans.CanonicalModel",
+    "pydantic.BaseModel",
+]
+
 [tool.ruff.lint]
 select = [
     "ANN", "B", "BLE", "C4", "D", "E", "ERA", "F", "G", "I", "LOG", "N",
@@ -44,6 +58,15 @@ select = [
 ignore = [
     "D100", "D104", "D105", "D107", "D203", "D205", "D212", "E501", "PLR2004",
     "TRY003",
+    # Pylint complexity budget (too-many-arguments/branches/returns/statements):
+    # pdomain-book-tools ignores these four repo-wide too, for the same
+    # reason they recur here — discovered landing Task 4 Step 2, where
+    # matching/engine.py, matching/legacy_projection.py, matching/models.py,
+    # matching/pgdp_continuations.py, and typography/{exchange,records}.py
+    # all carry functions past these thresholds. This package inherits that
+    # complexity verbatim from the move; a reorganisation commit renames and
+    # re-imports, it does not refactor function shapes.
+    "PLR0911", "PLR0912", "PLR0913", "PLR0915",
     # PLC0415 (import-not-at-top-level): pdomain-book-tools ignores this
     # repo-wide for the same reason it recurs here — deferred imports break
     # circular deps and avoid loading optional-heavy modules until needed.
@@ -69,6 +92,10 @@ convention = "google"
 # something a reorganisation commit may rename.
 "pdomain_book_contracts/geometry/bounding_box.py" = ["D102", "N802"]
 "pdomain_book_contracts/geometry/point.py" = ["D102", "N806"]
+# Enum members are list-typed values; RUF012 incorrectly treats them as
+# mutable class attributes. Carried over verbatim from pdomain-book-tools'
+# own per-file-ignore for this file at its old path.
+"pdomain_book_contracts/matching/character_groups.py" = ["RUF012"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["pdomain_book_contracts"]

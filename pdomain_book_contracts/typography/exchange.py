@@ -11,7 +11,7 @@ from typing import Annotated, Self
 
 from pydantic import Field, field_validator, model_validator
 
-from pdomain_book_tools.typography.review import (
+from pdomain_book_contracts.typography.review import (
     REVIEW_CONTRACT_VERSION,
     CorrectionDecision,
     LabelState,
@@ -21,7 +21,7 @@ from pdomain_book_tools.typography.review import (
     canonical_json_bytes,
     validate_sha256,
 )
-from pdomain_book_tools.typography.spans import CanonicalModel
+from pdomain_book_contracts.typography.spans import CanonicalModel
 
 _Coordinate = Annotated[float, Field(strict=True, allow_inf_nan=False)]
 _StrictIndex = Annotated[int, Field(strict=True, ge=0)]

@@ -6,7 +6,7 @@ import hashlib
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from pdomain_book_tools.matching.models import (
+from pdomain_book_contracts.matching.models import (
     MatchAlternative,
     MatchComparisonNormalization,
     MatchContinuationReference,
@@ -25,19 +25,19 @@ from pdomain_book_tools.matching.models import (
     canonical_relation_path_bytes,
     continuation_reference_matches_document_side,
 )
-from pdomain_book_tools.matching.pgdp_continuations import (
+from pdomain_book_contracts.matching.pgdp_continuations import (
     PgdpContinuation,
     PgdpContinuationDecision,
     build_pgdp_surface_document,
 )
-from pdomain_book_tools.typography.normalization import (
+from pdomain_book_contracts.text.normalization import (
     ComparisonView,
     build_comparison_view,
 )
-from pdomain_book_tools.typography.spans import split_graphemes
+from pdomain_book_contracts.typography.spans import split_graphemes
 
 if TYPE_CHECKING:
-    from pdomain_book_tools.matching.models import ArtifactRange
+    from pdomain_book_contracts.matching.models import ArtifactRange
 
 
 @dataclass(frozen=True)

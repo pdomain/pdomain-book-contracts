@@ -19,8 +19,8 @@ from typing import Annotated, Self
 
 from pydantic import Field, field_serializer, field_validator, model_validator
 
-from pdomain_book_tools.typography.labels import ConfidenceTier, LabelSource
-from pdomain_book_tools.typography.spans import (
+from pdomain_book_contracts.typography.labels import ConfidenceTier, LabelSource
+from pdomain_book_contracts.typography.spans import (
     GRAPHEME_SEGMENTATION_VERSION,
     CanonicalModel,
     split_graphemes,

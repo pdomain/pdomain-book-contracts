@@ -7,18 +7,24 @@ import hashlib
 import json
 import math
 import string
+import sys
 from collections.abc import Mapping
 from enum import StrEnum
 from types import MappingProxyType
-from typing import Annotated, Literal, Self, cast, override
+from typing import Annotated, Literal, Self, cast
+
+if sys.version_info >= (3, 12):
+    from typing import override
+else:
+    from typing_extensions import override  # pyright: ignore[reportUnreachable]
 
 from pydantic import Field, field_serializer, field_validator, model_validator
 from pydantic_core import PydanticCustomError
 
-from pdomain_book_tools.geometry.bounding_box import BoundingBox
-from pdomain_book_tools.typography.exchange import ArtifactReference
-from pdomain_book_tools.typography.normalization import ComparisonOperation
-from pdomain_book_tools.typography.spans import (
+from pdomain_book_contracts.geometry.bounding_box import BoundingBox
+from pdomain_book_contracts.text.normalization import ComparisonOperation
+from pdomain_book_contracts.typography.exchange import ArtifactReference
+from pdomain_book_contracts.typography.spans import (
     CanonicalModel,
     SourceSlice,
     StyleSpan,
@@ -88,6 +94,20 @@ def _model_input(value: object) -> object:
     return value
 
 
+def _raw_decode(
+    decoder: json.JSONDecoder, text: str, position: int
+) -> tuple[object, int]:
+    """Decode one JSON value, narrowing the stdlib decoder's untyped return.
+
+    ``json.JSONDecoder.raw_decode`` is typed ``tuple[Any, int]`` upstream —
+    JSON values are heterogeneous, so the stdlib stub cannot do better. This
+    wraps that boundary once so ``Any`` never spreads into this module's own
+    call sites, which narrow the value with ``isinstance`` immediately after.
+    """
+    result = decoder.raw_decode(text, position)
+    return cast("object", result[0]), result[1]
+
+
 def _parse_json_object_member_ranges(
     artifact_bytes: bytes,
 ) -> tuple[dict[str, object], dict[str, tuple[int, int]]]:
@@ -112,7 +132,7 @@ def _parse_json_object_member_ranges(
     ranges: dict[str, tuple[int, int]] = {}
     position = skip_whitespace(position)
     while position < len(text) and text[position] != "}":
-        key_value, position = decoder.raw_decode(text, position)
+        key_value, position = _raw_decode(decoder, text, position)
         if not isinstance(key_value, str):
             msg = "F2 page keys must be JSON strings"
             raise TypeError(msg)
@@ -124,7 +144,7 @@ def _parse_json_object_member_ranges(
             msg = "F2 page key must be followed by a value"
             raise ValueError(msg)
         value_start = skip_whitespace(position + 1)
-        member_value, value_end = decoder.raw_decode(text, value_start)
+        member_value, value_end = _raw_decode(decoder, text, value_start)
         members[key_value] = member_value
         ranges[key_value] = (byte_offsets[value_start], byte_offsets[value_end])
         position = skip_whitespace(value_end)
@@ -864,7 +884,7 @@ class TypographyPageRecord(CanonicalModel):
             msg = "f2_page_value_lexical_byte_range exceeds the F2 artifact"
             raise ValueError(msg)
         try:
-            lexical_value: object = json.loads(artifact_bytes[start:end])
+            lexical_value = cast("object", json.loads(artifact_bytes[start:end]))
             document, member_ranges = _parse_json_object_member_ranges(artifact_bytes)
         except (json.JSONDecodeError, UnicodeDecodeError) as error:
             msg = "F2 lexical value range must identify a valid JSON string"

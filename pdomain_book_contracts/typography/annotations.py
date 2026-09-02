@@ -5,12 +5,12 @@ from typing import Annotated, Self
 
 from pydantic import Field, field_validator, model_validator
 
-from pdomain_book_tools.typography.labels import (
+from pdomain_book_contracts.typography.labels import (
     KnowledgeState,
     LabelSource,
     StyleLabel,
 )
-from pdomain_book_tools.typography.spans import CanonicalModel, StyleSpan
+from pdomain_book_contracts.typography.spans import CanonicalModel, StyleSpan
 
 _StrictIndex = Annotated[int, Field(strict=True, ge=0)]
 _Probability = Annotated[float, Field(ge=0.0, le=1.0)]
