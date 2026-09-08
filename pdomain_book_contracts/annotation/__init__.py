@@ -11,9 +11,19 @@ from pdomain_book_contracts.annotation.provenance import (
     KnowledgeState,
     LabelSource,
 )
+from pdomain_book_contracts.annotation.roles import (
+    ALLOWED_REGION_ROLES,
+    REGION_ROLE_ALIASES,
+    RegionRole,
+    normalize_region_role,
+)
 
 __all__ = [
+    "ALLOWED_REGION_ROLES",
+    "REGION_ROLE_ALIASES",
     "ConfidenceTier",
     "KnowledgeState",
     "LabelSource",
+    "RegionRole",
+    "normalize_region_role",
 ]

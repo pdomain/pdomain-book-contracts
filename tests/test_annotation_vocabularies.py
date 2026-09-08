@@ -38,3 +38,53 @@ def test_typography_labels_still_re_export_them() -> None:
     from pdomain_book_contracts.typography.labels import KnowledgeState as ReExported
 
     assert Moved is ReExported
+
+
+def test_the_twenty_shipped_roles_are_unchanged() -> None:
+    from pdomain_book_contracts.annotation import ALLOWED_REGION_ROLES
+
+    shipped = {
+        "paragraph", "sidenote", "page header", "page footer", "page number",
+        "printers mark", "blockquote", "poetry", "recovered", "illustration",
+        "decoration", "caption", "figure", "table", "footnote", "title",
+        "section", "list", "formula", "artefact",
+    }
+    assert shipped <= ALLOWED_REGION_ROLES
+
+
+def test_the_fourteen_additions_are_present() -> None:
+    from pdomain_book_contracts.annotation import ALLOWED_REGION_ROLES
+
+    additions = {
+        "signature mark", "catchword", "press figure", "rule", "brace",
+        "bracket", "group label", "plate", "speaker label", "stage direction",
+        "interlinear gloss", "abandoned", "decorated initial", "unknown",
+    }
+    assert additions <= ALLOWED_REGION_ROLES
+    assert len(ALLOWED_REGION_ROLES) == 34
+
+
+def test_aliases_fold_to_canonical_roles() -> None:
+    from pdomain_book_contracts.annotation import normalize_region_role
+
+    assert normalize_region_role("frontispiece") == "plate"
+    assert normalize_region_role("signaturemark") == "signature mark"
+    assert normalize_region_role("pressfigure") == "press figure"
+    assert normalize_region_role("stagedirection") == "stage direction"
+    assert normalize_region_role("speakerlabel") == "speaker label"
+
+
+def test_normalizer_accepts_case_and_separator_variants() -> None:
+    from pdomain_book_contracts.annotation import normalize_region_role
+
+    assert normalize_region_role("Page_Header") == "page header"
+    assert normalize_region_role("  PAGE-NUMBER  ") == "page number"
+
+
+def test_unknown_role_raises() -> None:
+    import pytest
+
+    from pdomain_book_contracts.annotation import normalize_region_role
+
+    with pytest.raises(ValueError, match="Invalid region role"):
+        normalize_region_role("marginalia")
