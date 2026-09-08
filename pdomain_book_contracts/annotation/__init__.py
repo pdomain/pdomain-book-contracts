@@ -6,6 +6,11 @@ page model, so every repository can depend on it without pulling either in.
 
 from __future__ import annotations
 
+from pdomain_book_contracts.annotation.page_kind import (
+    ALLOWED_PAGE_KINDS,
+    PageKind,
+    normalize_page_kind,
+)
 from pdomain_book_contracts.annotation.provenance import (
     ConfidenceTier,
     KnowledgeState,
@@ -19,11 +24,14 @@ from pdomain_book_contracts.annotation.roles import (
 )
 
 __all__ = [
+    "ALLOWED_PAGE_KINDS",
     "ALLOWED_REGION_ROLES",
     "REGION_ROLE_ALIASES",
     "ConfidenceTier",
     "KnowledgeState",
     "LabelSource",
+    "PageKind",
     "RegionRole",
+    "normalize_page_kind",
     "normalize_region_role",
 ]

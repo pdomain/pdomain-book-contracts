@@ -88,3 +88,37 @@ def test_unknown_role_raises() -> None:
 
     with pytest.raises(ValueError, match="Invalid region role"):
         normalize_region_role("marginalia")
+
+
+def test_page_kind_covers_the_body_and_front_matter_cases() -> None:
+    from pdomain_book_contracts.annotation import ALLOWED_PAGE_KINDS
+
+    expected = {
+        "body", "chapter opening", "title page", "half title", "contents",
+        "index", "dedication", "preface", "errata", "plate", "blank",
+        "advertisement", "colophon", "unknown",
+    }
+    assert expected == ALLOWED_PAGE_KINDS
+
+
+def test_page_kind_has_an_explicit_unknown() -> None:
+    from pdomain_book_contracts.annotation import PageKind
+
+    assert PageKind.UNKNOWN == "unknown"
+
+
+def test_page_kind_normalizer_folds_variants() -> None:
+    from pdomain_book_contracts.annotation import normalize_page_kind
+
+    assert normalize_page_kind("Chapter_Opening") == "chapter opening"
+    assert normalize_page_kind("titlepage") == "title page"
+
+
+def test_page_kind_rejects_a_packaging_value() -> None:
+    import pytest
+
+    from pdomain_book_contracts.annotation import normalize_page_kind
+
+    # "skip" and "cover" belong to prep-for-pgdp's PageType, not here.
+    with pytest.raises(ValueError, match="Invalid page kind"):
+        normalize_page_kind("skip")
