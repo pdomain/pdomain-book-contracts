@@ -2,6 +2,12 @@ from __future__ import annotations
 
 from enum import StrEnum
 
+from pdomain_book_contracts.annotation.provenance import (
+    ConfidenceTier,
+    KnowledgeState,
+    LabelSource,
+)
+
 
 class StyleLabel(StrEnum):
     """Visible typography labels in the canonical interchange contract."""
@@ -19,29 +25,9 @@ class StyleLabel(StrEnum):
     FONT_OTHER_REVIEWED = "font_other_reviewed"
 
 
-class KnowledgeState(StrEnum):
-    """How much is known about one label assignment."""
-
-    POSITIVE = "positive"
-    VERIFIED_NEGATIVE = "verified_negative"
-    UNKNOWN = "unknown"
-    CONFLICT = "conflict"
-
-
-class LabelSource(StrEnum):
-    """Evidence sources that can assign a canonical label."""
-
-    F2 = "f2"
-    GUTENBERG_HTML = "gutenberg_html"
-    SE_COMPUTED_CSS = "se_computed_css"
-    HUMAN = "human"
-    SYNTHETIC = "synthetic"
-
-
-class ConfidenceTier(StrEnum):
-    """Reviewed confidence tiers for label evidence."""
-
-    GOLD = "gold"
-    SILVER = "silver"
-    BRONZE = "bronze"
-    QUARANTINE = "quarantine"
+__all__ = [
+    "ConfidenceTier",
+    "KnowledgeState",
+    "LabelSource",
+    "StyleLabel",
+]
