@@ -64,6 +64,7 @@ class RegionType(StrEnum):
     # whitespace analysis when the layout model misses it. Treated the same
     # as a model-emitted region for tagging / block-role bubble-up.
     sidenote = "sidenote"
+    page_number = "page_number"
 
 
 @dataclass(unsafe_hash=True)
