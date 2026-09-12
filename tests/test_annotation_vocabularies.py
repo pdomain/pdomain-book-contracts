@@ -44,10 +44,26 @@ def test_the_twenty_shipped_roles_are_unchanged() -> None:
     from pdomain_book_contracts.annotation import ALLOWED_REGION_ROLES
 
     shipped = {
-        "paragraph", "sidenote", "page header", "page footer", "page number",
-        "printers mark", "blockquote", "poetry", "recovered", "illustration",
-        "decoration", "caption", "figure", "table", "footnote", "title",
-        "section", "list", "formula", "artefact",
+        "paragraph",
+        "sidenote",
+        "page header",
+        "page footer",
+        "page number",
+        "printers mark",
+        "blockquote",
+        "poetry",
+        "recovered",
+        "illustration",
+        "decoration",
+        "caption",
+        "figure",
+        "table",
+        "footnote",
+        "title",
+        "section",
+        "list",
+        "formula",
+        "artefact",
     }
     assert shipped <= ALLOWED_REGION_ROLES
 
@@ -56,9 +72,20 @@ def test_the_fourteen_additions_are_present() -> None:
     from pdomain_book_contracts.annotation import ALLOWED_REGION_ROLES
 
     additions = {
-        "signature mark", "catchword", "press figure", "rule", "brace",
-        "bracket", "group label", "plate", "speaker label", "stage direction",
-        "interlinear gloss", "abandoned", "decorated initial", "unknown",
+        "signature mark",
+        "catchword",
+        "press figure",
+        "rule",
+        "brace",
+        "bracket",
+        "group label",
+        "plate",
+        "speaker label",
+        "stage direction",
+        "interlinear gloss",
+        "abandoned",
+        "decorated initial",
+        "unknown",
     }
     assert additions <= ALLOWED_REGION_ROLES
     assert len(ALLOWED_REGION_ROLES) == 34
@@ -94,9 +121,20 @@ def test_page_kind_covers_the_body_and_front_matter_cases() -> None:
     from pdomain_book_contracts.annotation import ALLOWED_PAGE_KINDS
 
     expected = {
-        "body", "chapter opening", "title page", "half title", "contents",
-        "index", "dedication", "preface", "errata", "plate", "blank",
-        "advertisement", "colophon", "unknown",
+        "body",
+        "chapter opening",
+        "title page",
+        "half title",
+        "contents",
+        "index",
+        "dedication",
+        "preface",
+        "errata",
+        "plate",
+        "blank",
+        "advertisement",
+        "colophon",
+        "unknown",
     }
     assert expected == ALLOWED_PAGE_KINDS
 

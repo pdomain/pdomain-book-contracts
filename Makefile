@@ -3,22 +3,22 @@
 .PHONY: setup test lint typecheck format build ci
 
 setup:
-	UV_PROJECT_ENVIRONMENT=.venv uv sync --all-groups
+	uv sync --all-groups
 
 test:
-	UV_PROJECT_ENVIRONMENT=.venv uv run pytest
+	uv run pytest
 
 lint:
-	UV_PROJECT_ENVIRONMENT=.venv uv run ruff check .
+	uv run ruff check .
 
 typecheck:
-	UV_PROJECT_ENVIRONMENT=.venv uv run basedpyright
+	uv run basedpyright
 
 format:
-	UV_PROJECT_ENVIRONMENT=.venv uv run ruff format .
+	uv run ruff format .
 
 build:
-	UV_PROJECT_ENVIRONMENT=.venv uv build
+	uv build
 
 ci: lint typecheck test build
-	UV_PROJECT_ENVIRONMENT=.venv docgraph check --strict
+	docgraph check --strict

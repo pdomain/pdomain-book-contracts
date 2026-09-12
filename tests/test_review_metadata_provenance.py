@@ -30,8 +30,13 @@ def test_a_rejection_is_expressible() -> None:
     from pdomain_book_contracts.annotation import KnowledgeState, LabelSource
     from pdomain_book_contracts.ocr import ReviewMetadata
 
-    rejected = ReviewMetadata(source=LabelSource.HUMAN, state=KnowledgeState.VERIFIED_NEGATIVE)
-    assert ReviewMetadata.from_dict(rejected.to_dict()).state == KnowledgeState.VERIFIED_NEGATIVE
+    rejected = ReviewMetadata(
+        source=LabelSource.HUMAN, state=KnowledgeState.VERIFIED_NEGATIVE
+    )
+    assert (
+        ReviewMetadata.from_dict(rejected.to_dict()).state
+        == KnowledgeState.VERIFIED_NEGATIVE
+    )
 
 
 def test_an_f2_supplied_answer_is_distinguishable_from_a_typed_one() -> None:
