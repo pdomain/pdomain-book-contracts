@@ -6,7 +6,7 @@
 - **Status:** active
 - **Owner:** CT
 - **Created:** 2026-09-02
-- **Last verified:** 2026-09-02
+- **Last verified:** 2026-11-06
 - **Provenance:** agent-authored at repository creation, following the
   workspace-shared conventions block used across sibling repositories.
 - **Disposition:** Retained as authoritative repository conventions.
@@ -16,41 +16,56 @@ documentation rules in [`DOCGRAPH.md`](DOCGRAPH.md).
 
 ## Rule: No heavy dependency, ever
 
-**The rule.** This package's dependencies are pydantic, pydantic-core,
-shapely, and regex — nothing else. Never add torch, doctr, torchvision, cv2,
-numpy, pandas, matplotlib, ipython, or transformers, even as a test-only or
-optional dependency. Code that needs any of those belongs in
-`pdomain-book-tools`, not here.
+**The rule.** Runtime dependencies are pydantic, pydantic-core, shapely,
+regex, and typing-extensions. `typing-extensions` is allowed because Python
+3.11 needs it for `override`.
+
+Never add torch, doctr, torchvision, cv2, numpy, pandas, matplotlib,
+ipython, or transformers, even as a test-only or optional dependency. Code
+that needs any of those belongs in `pdomain-book-tools`, not here.
 
 **Why.** This package exists so a consumer that wants one pure-Python
 contract does not pay for an imaging stack. A single heavy import defeats the
 entire reason the package was split out.
 
+Numpy still loads, because shapely imports it. Do not add numpy to this
+package's own dependency list.
+
+The decision dated 2026-11-06 in
+[durable decisions](docs/context/decisions.md) records the
+typing-extensions allowance.
+
 **Common high-confidence violations** (bot auto-fix candidates)
 
 - Any of the blocked names added to `[project] dependencies` or
   `[dependency-groups]` in `pyproject.toml`.
-- A module-level `import numpy`, `import cv2`, `import torch`, or similar
-  anywhere under `pdomain_book_contracts/`.
+- A runtime module-level `import numpy`, `import cv2`, `import torch`, or
+  similar anywhere under `pdomain_book_contracts/`. The `TYPE_CHECKING`
+  import of `numpy.ndarray` in
+  `pdomain_book_contracts/geometry/bounding_box.py` is allowed. It is
+  erased at runtime.
 
 **Common judgment-call violations** (bot flags, CT decides)
 
-- A `TYPE_CHECKING`-only import of a `pdomain-book-tools` type (e.g. `Block`,
-  `Page`, `Word`) for an annotation. This does not break the runtime
-  boundary, but it does mean the package cannot type-check alone; see the
-  book-contracts module layout spec in `pdomain-ops` before adding one.
+- A `TYPE_CHECKING`-only import of a `pdomain-book-tools` type, such as
+  `Block`, `Page`, or `Word`, for an annotation. This does not break the
+  runtime boundary. But it does mean the package cannot type-check alone.
+  See the book-contracts module layout spec in `pdomain-ops` before adding
+  one.
 
 <!-- workspace-conventions:start -->
 
 ## Rule: Do not read this package's coverage as a pass
 
-This package enforces no coverage floor. Its own 12 tests reach 36 percent, and the code is
-actually exercised by `pdomain-book-tools`' suite through the re-export shims, which measures
-none of it. See
+This package enforces no coverage floor. The tests in this repository do not
+replace the `pdomain-book-tools` suite. That suite exercises these contracts
+through the re-export shims. It measures none of this package.
+
+The 2026-09-02 measurement is in
 [extracted code left its coverage gate behind](docs/issues/2026-09-02-contracts-code-left-its-coverage-gate-behind.md).
 
-Do not add a floor here until enough tests live here for the number to mean something, and
-do not restore the gate by measuring this package from book-tools.
+Do not add a floor here until enough tests live here for the number to mean
+something. Do not restore the gate by measuring this package from book-tools.
 
 ## Rule: Write docs clearly
 

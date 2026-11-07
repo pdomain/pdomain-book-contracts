@@ -6,12 +6,14 @@
 - **Status:** active
 - **Owner:** CT
 - **Created:** 2026-09-02
-- **Last verified:** 2026-09-02
+- **Last verified:** 2026-11-06
 - **Read when:** navigating repository documentation.
 - **Search terms:** documentation map, docs layout, folder purpose.
 
-Start with the [current state](context/current-state.md), [intent
-map](context/intent-map.md), and [durable decisions](context/decisions.md).
+Start with the [architecture overview](architecture/00-overview.md), the
+[current state](context/current-state.md), the
+[issue index](issues/README.md), the [intent map](context/intent-map.md),
+and the [durable decisions](context/decisions.md).
 Process references include the [writing style](process/writing-style.md) and
 [lint suppression catalogue](process/lint-deviations.md).
 
