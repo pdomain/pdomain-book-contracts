@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := ci
 
-.PHONY: setup install-hooks test lint typecheck format build ci
+.PHONY: setup install-hooks update-hooks test lint typecheck format build ci
 
 setup:
 	uv sync --all-groups
@@ -19,6 +19,9 @@ install-hooks: ## (Re)install pre-commit hooks (repairs a stale interpreter path
 	else \
 	  uv run pre-commit install --hook-type pre-commit --hook-type commit-msg; \
 	fi
+
+update-hooks: ## Bump hooks to their latest releases, frozen to commit SHAs
+	uv run pre-commit autoupdate --freeze
 
 test:
 	uv run pytest
