@@ -6,7 +6,7 @@
 - **Status:** active
 - **Owner:** CT
 - **Created:** 2026-09-02
-- **Last verified:** 2026-09-02
+- **Last verified:** 2026-11-07
 - **Provenance:** copied from the workspace-shared writing style used across
   sibling repositories.
 - **Disposition:** Retained as current process guidance.

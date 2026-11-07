@@ -2,7 +2,7 @@
 Status: open
 Owner: CT
 Created: 2026-09-02
-Last verified: 2026-09-02
+Last verified: 2026-11-07
 Kind: issue
 ---
 
@@ -13,7 +13,7 @@ Kind: issue
 - **Kind:** issue
 - **Status:** open
 - **Owner:** CT
-- **Last verified:** 2026-09-02
+- **Last verified:** 2026-11-07
 - **Read when:** adding a coverage gate here, or moving tests out of `pdomain-book-tools`.
 - **Search terms:** coverage, test ownership, extraction, 87 percent floor, site-packages.
 
@@ -29,15 +29,26 @@ A change here can drop the tested surface of the shared contracts with no signal
 that looks like it covers this code, book-tools' 89.84 percent, does not include a line of
 it.
 
-The code is still exercised. Book-tools runs 2,918 tests against it through the re-export
-shims on every gate. This is a gap in enforcement and measurement, not evidence of untested
-code.
+Book-tools exercises these contracts through re-export shims. Its September run had
+2,918 tests. That count does not establish coverage of every contract. The gap is in
+measurement and enforcement.
 
 ## Environment / versions
 
 `pdomain-book-contracts` v0.1.0, `pdomain-book-tools` v0.27.0, measured 2026-09-02.
 
 ## Evidence
+
+Verified on 2026-11-07:
+
+- `uv run pytest -q` passed all 34 tests in this repository.
+- This repository's `pyproject.toml` and Makefile configure no coverage measurement or floor.
+- Book-tools' `pyproject.toml` measures only `pdomain_book_tools` and sets an 87 percent floor.
+  Its `.coveragerc.cpu` also measures only that package and excludes `*/site-packages/*`.
+- Book-tools' `geometry/point.py` still re-exports the contracts `Point` type.
+
+The measurements below are from 2026-09-02. Coverage was not remeasured, and the
+book-tools suite was not rerun during the November check.
 
 | what | number |
 | --- | ---: |
@@ -61,14 +72,15 @@ Book-tools kept measuring only itself, and this repository never had a floor to 
 ## Defects to fix
 
 - This package enforces no coverage floor.
-- Its 12 tests reach 36 percent, most of it import-time execution rather than asserted
-  behaviour.
+- The September baseline was 12 tests reaching 36 percent, much of it import-time
+  execution. The current 34-test suite has no measured coverage baseline.
 - Book-tools' coverage figure excludes this package while appearing to cover the moved code.
 
 ## What is NOT broken
 
-Nothing is untested as a result of this. The moved code passes 2,918 tests on every
-book-tools gate run. No consumer is affected, and no released artifact is wrong.
+The September book-tools run passed 2,918 tests. This issue records a coverage gap,
+not a demonstrated consumer failure or defective release. A passing suite alone
+does not establish that every moved contract is tested.
 
 ## Dependencies
 
