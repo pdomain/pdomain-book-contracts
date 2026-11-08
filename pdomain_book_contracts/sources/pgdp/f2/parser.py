@@ -299,12 +299,18 @@ def _parse_tokens(
             grapheme_index += width
             continue
         if token.kind is F2TokenKind.BLOCK_OPEN:
-            context = _BLOCK_CONTEXT[token.text]
+            context = _BLOCK_CONTEXT.get(token.text)
+            if context is None:
+                _append_unique(warnings, F2ParseWarning.UNKNOWN_CONSTRUCT)
+                continue
             active_blocks.append(token.text)
             _append_unique(structural_context, context)
             continue
         if token.kind is F2TokenKind.BLOCK_CLOSE:
-            expected_open = _BLOCK_OPEN_BY_CLOSE[token.text]
+            expected_open = _BLOCK_OPEN_BY_CLOSE.get(token.text)
+            if expected_open is None:
+                _append_unique(warnings, F2ParseWarning.UNKNOWN_CONSTRUCT)
+                continue
             if not active_blocks:
                 _append_unique(warnings, F2ParseWarning.UNMATCHED_BLOCK)
             elif active_blocks[-1] != expected_open:

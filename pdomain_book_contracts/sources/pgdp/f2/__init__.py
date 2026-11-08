@@ -14,6 +14,7 @@ from pdomain_book_contracts.sources.pgdp.f2.project_rules import (
     ProjectRule,
     ProjectRuleRegistry,
 )
+from pdomain_book_contracts.sources.pgdp.f2.structure import layout_hints_from_tokens
 from pdomain_book_contracts.sources.pgdp.f2.tokens import (
     F2JsonDocument,
     F2JsonPage,
@@ -45,6 +46,7 @@ __all__ = [
     "F2Warning",
     "ProjectRule",
     "ProjectRuleRegistry",
+    "layout_hints_from_tokens",
     "read_f2_json",
     "read_f2_json_page",
     "tokenize_f2",

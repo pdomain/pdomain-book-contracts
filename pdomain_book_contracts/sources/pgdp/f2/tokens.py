@@ -28,6 +28,7 @@ if TYPE_CHECKING:
 
 F2_TOKENIZER_VERSION = f"f2-tokenizer-1+regex-{regex.__version__}"
 _KNOWN_TAGS = frozenset({"i", "b", "sc", "g", "f", "u"})
+_STRUCTURAL_TAGS = frozenset({"table", "tr", "td", "th"})
 _BLOCK_MARKERS = {
     "/*": "block_open",
     "*/": "block_close",
@@ -42,6 +43,8 @@ class F2TokenKind(StrEnum):
     TEXT = "text"
     OPEN_TAG = "open_tag"
     CLOSE_TAG = "close_tag"
+    STRUCTURAL_OPEN = "structural_open"
+    STRUCTURAL_CLOSE = "structural_close"
     NOTE = "note"
     BLOCK_OPEN = "block_open"
     BLOCK_CLOSE = "block_close"
@@ -207,6 +210,13 @@ def _is_inline_tag(text: str) -> tuple[bool, str] | None:
     closing, tag_name = tag
     expected = f"</{tag_name}>" if closing else f"<{tag_name}>"
     if text != expected:
+        return None
+    return tag
+
+
+def _is_structural_tag(text: str) -> tuple[bool, str] | None:
+    tag = _opaque_tag_parts(text)
+    if tag is None or tag[1] not in _STRUCTURAL_TAGS:
         return None
     return tag
 
@@ -467,6 +477,24 @@ def _tokenize_characters(
                             open_tags.pop()
                     else:
                         open_tags.append((tag_name, _slice_for_characters(selected)))
+                    index = tag_end
+                    continue
+                structural_tag = _is_structural_tag(tag_text)
+                if structural_tag is not None:
+                    flush_text_run()
+                    closing, _tag_name = structural_tag
+                    tokens.append(
+                        F2Token(
+                            kind=(
+                                F2TokenKind.STRUCTURAL_CLOSE
+                                if closing
+                                else F2TokenKind.STRUCTURAL_OPEN
+                            ),
+                            text=tag_text,
+                            source_slices=_slice_for_characters(selected),
+                            visible_text="",
+                        )
+                    )
                     index = tag_end
                     continue
                 unknown_tag = _opaque_tag_parts(tag_text)
