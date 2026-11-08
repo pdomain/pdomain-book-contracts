@@ -56,7 +56,7 @@ _STANDARD_TAG_LABELS = {
     "g": StyleLabel.LETTER_SPACED,
 }
 _STYLE_TAGS = frozenset({*_STANDARD_TAG_LABELS, "f", "u"})
-_BLOCK_CONTEXT = {"/*": "poetry_block", "/#": "display_block"}
+_BLOCK_CONTEXT = {"/*": "formatted_block", "/#": "display_block"}
 _BLOCK_OPEN_BY_CLOSE = {"*/": "/*", "#/": "/#"}
 
 

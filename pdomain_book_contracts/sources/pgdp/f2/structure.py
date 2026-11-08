@@ -13,8 +13,14 @@ _TAG_NAME = re.compile(r"^</?\s*([^\s>/]+)")
 _ATTRIBUTE = re.compile(
     r"""\s+([^\s=/>]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?"""
 )
-_HintKind = Literal["poetry", "blockquote", "table_candidate", "column_flow"]
-_BLOCK_OPEN: dict[str, _HintKind] = {"/*": "poetry", "/#": "blockquote"}
+_HintKind = Literal[
+    "poetry",
+    "blockquote",
+    "table_candidate",
+    "column_flow",
+    "formatted_block",
+]
+_BLOCK_OPEN: dict[str, _HintKind] = {"/*": "formatted_block", "/#": "blockquote"}
 _BLOCK_CLOSE = {"*/": "/*", "#/": "/#"}
 _STRUCTURAL_CHILDREN = {
     "table": frozenset({"tr"}),

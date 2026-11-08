@@ -45,6 +45,7 @@ class F2TokenKind(StrEnum):
     CLOSE_TAG = "close_tag"
     STRUCTURAL_OPEN = "structural_open"
     STRUCTURAL_CLOSE = "structural_close"
+    CONTROL = "control"
     NOTE = "note"
     BLOCK_OPEN = "block_open"
     BLOCK_CLOSE = "block_close"
@@ -490,6 +491,18 @@ def _tokenize_characters(
                                 if closing
                                 else F2TokenKind.STRUCTURAL_OPEN
                             ),
+                            text=tag_text,
+                            source_slices=_slice_for_characters(selected),
+                            visible_text="",
+                        )
+                    )
+                    index = tag_end
+                    continue
+                if tag_text == "<tb>":
+                    flush_text_run()
+                    tokens.append(
+                        F2Token(
+                            kind=F2TokenKind.CONTROL,
                             text=tag_text,
                             source_slices=_slice_for_characters(selected),
                             visible_text="",

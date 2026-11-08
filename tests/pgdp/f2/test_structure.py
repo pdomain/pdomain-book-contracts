@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 from datetime import UTC, datetime
 
 from pdomain_book_contracts.sources.pgdp.f2.parser import F2Parser
@@ -36,27 +37,85 @@ def _identity(payload: bytes) -> TextIdentity:
     )
 
 
-def test_poetry_lines_keep_grapheme_range_and_indentation() -> None:
+def test_formatted_block_lines_keep_grapheme_range_and_indentation() -> None:
     parsed = tokenize_f2("/*  a\u0301lpha\n    beta*/".encode())
 
     hints = layout_hints_from_tokens(parsed, source_ref="rounds/F2.json#1")
 
     assert len(hints) == 1
     hint = hints[0]
-    assert hint.kind == "poetry"
+    assert hint.kind == "formatted_block"
     assert hint.text == "  a\u0301lpha\n    beta"
     assert [line.text for line in hint.lines] == ["a\u0301lpha", "beta"]
     assert [line.indent_hint for line in hint.lines] == ["2 spaces", "4 spaces"]
     assert hint.grapheme_range == (0, 16)
 
 
-def test_poetry_range_uses_global_grapheme_boundaries_across_inline_tags() -> None:
+def test_formatted_block_range_uses_global_grapheme_boundaries_across_inline_tags() -> (
+    None
+):
     parsed = tokenize_f2("/*a<i>\u0301</i>b*/".encode())
 
     hint = layout_hints_from_tokens(parsed, source_ref="rounds/F2.json#1")[0]
 
     assert "".join(grapheme.text for grapheme in parsed.graphemes) == "a\u0301b"
     assert hint.grapheme_range == (0, 2)
+
+
+def test_formatted_block_keeps_numeric_content_out_of_the_poetry_role() -> None:
+    parsed = tokenize_f2(b"/*11[** ,]717*/")
+
+    hints = layout_hints_from_tokens(parsed, source_ref="rounds/F2.json#15.png")
+
+    assert parsed.visible_text == "11717"
+    assert [(hint.kind, hint.text) for hint in hints] == [("formatted_block", "11717")]
+
+
+def test_tb_control_preserves_following_note_style_block_and_text() -> None:
+    page_text = (
+        "/*life?\r\n\r\n<tb> [**or *    *    *    *]\r\n\r\n"
+        "<i>Her image</i> buried in unseeing sight,\r\n*/"
+    )
+    parsed = tokenize_f2(page_text.encode())
+
+    control = next(token for token in parsed.tokens if token.text == "<tb>")
+
+    assert control.kind.value == "control"
+    assert control.visible_text == ""
+    assert len(control.source_slices) == 4
+    assert (
+        parsed.visible_text
+        == "life?\r\n\r\n \r\n\r\nHer image buried in unseeing sight,\r\n"
+    )
+    assert "tb" not in parsed.visible_text
+    assert "or *" not in parsed.visible_text
+    assert "*/" not in parsed.visible_text
+    assert [
+        (hint.kind, hint.text)
+        for hint in layout_hints_from_tokens(
+            parsed, source_ref="rounds/F2.json#026.png"
+        )
+    ] == [
+        (
+            "formatted_block",
+            "life?\r\n\r\n \r\n\r\nHer image buried in unseeing sight,\r\n",
+        )
+    ]
+
+    payload = json.dumps({"026.png": page_text}).encode()
+    record = F2Parser().parse_page(
+        identity=_identity(payload),
+        guideline_version="1",
+        f2_artifact_bytes=payload,
+        page_key="026.png",
+    )
+
+    assert record.parsed_text == parsed.visible_text
+    assert record.structural_context == ("formatted_block",)
+    assert [note.page_review_content for note in record.parser_notes] == [
+        "or *    *    *    *"
+    ]
+    assert [(span.start, span.end) for span in record.style_spans] == [(10, 19)]
 
 
 def test_marker_inside_a_grapheme_abstains_from_layout_evidence() -> None:

@@ -46,6 +46,23 @@ def test_text_hint_round_trip_omits_unknown_ranges() -> None:
     assert LayoutTextHint.from_dict(wire) == hint
 
 
+def test_formatted_block_is_text_evidence_not_a_confirmed_structure() -> None:
+    hint = LayoutTextHint(
+        kind="formatted_block",
+        source="f2",
+        text="11 717",
+        lines=(LayoutTextLine(text="11 717"),),
+        source_ref="rounds/F2.json#15.png",
+    )
+
+    assert hint.kind == "formatted_block"
+
+    with pytest.raises(ValidationError, match="kind"):
+        LayoutStructure.model_validate(
+            {"kind": "formatted_block", "lines": [{"text": "11 717"}]}
+        )
+
+
 @pytest.mark.parametrize("field", ["grapheme_range", "source_byte_range"])
 def test_text_hint_rejects_invalid_half_open_range(field: str) -> None:
     kwargs: dict[str, object] = {

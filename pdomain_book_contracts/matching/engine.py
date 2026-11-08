@@ -996,7 +996,15 @@ def _project_comparison_operations(
             projected.append(
                 (
                     MatchOperation(
-                        kind=MatchOperationKind.SUBSTITUTION,
+                        kind=(
+                            MatchOperationKind.TARGET_ONLY_INSERTION
+                            if previous.source_grapheme_range[0]
+                            == operation.source_grapheme_range[1]
+                            else MatchOperationKind.SOURCE_ONLY_DELETION
+                            if previous.target_grapheme_range[0]
+                            == operation.target_grapheme_range[1]
+                            else MatchOperationKind.SUBSTITUTION
+                        ),
                         source_grapheme_range=(
                             previous.source_grapheme_range[0],
                             operation.source_grapheme_range[1],

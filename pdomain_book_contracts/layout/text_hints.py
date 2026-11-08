@@ -10,7 +10,13 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 _NonEmptyString = Annotated[str, Field(strict=True, min_length=1)]
 _StrictIndex = Annotated[int, Field(strict=True)]
 _FiniteFloat = Annotated[float, Field(strict=True)]
-_LayoutHintKind = Literal["poetry", "blockquote", "table_candidate", "column_flow"]
+_LayoutHintKind = Literal[
+    "poetry",
+    "blockquote",
+    "table_candidate",
+    "column_flow",
+    "formatted_block",
+]
 _LayoutHintSource = Literal["f2", "gutenberg_html"]
 _LayoutStructureKind = Literal["poetry", "blockquote", "table", "column_flow"]
 
