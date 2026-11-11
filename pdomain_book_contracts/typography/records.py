@@ -134,8 +134,10 @@ def _parse_json_object_member_ranges(
     while position < len(text) and text[position] != "}":
         key_value, position = _raw_decode(decoder, text, position)
         if not isinstance(key_value, str):
-            msg = "F2 page keys must be JSON strings"
-            raise TypeError(msg)
+            raise PydanticCustomError(
+                "f2_page_key_type",
+                "F2 page keys must be JSON strings",
+            )
         if key_value in members:
             msg = f"F2 artifact contains duplicate page key {key_value!r}"
             raise ValueError(msg)

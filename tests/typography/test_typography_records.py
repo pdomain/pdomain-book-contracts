@@ -907,3 +907,10 @@ def test_model_copy_accepts_plain_mapping_updates() -> None:
         ValidationError, match=r"must appear in identity\.text_artifacts"
     ):
         built.model_copy(update={"identity": identity(text_shas=("aa" * 32,))})
+
+
+def test_non_string_f2_page_key_is_a_validation_error() -> None:
+    doc = b'{1:"x"}'
+    fields = f2_fields(doc, "1", b'"x"')
+    with pytest.raises(ValidationError, match="F2 page keys must be JSON strings"):
+        record(**fields)
