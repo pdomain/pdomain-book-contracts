@@ -75,8 +75,7 @@ class ArtifactReference(CanonicalModel):
             or "\\" in value
             or (len(value) >= 2 and value[0].isalpha() and value[1] == ":")
             or path.is_absolute()
-            or ".." in path.parts
-            or "." in path.parts
+            or any(segment in {".", ".."} for segment in value.split("/"))
         ):
             msg = "relative_path must be a nonempty safe relative POSIX path"
             raise ValueError(msg)

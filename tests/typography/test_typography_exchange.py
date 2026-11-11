@@ -1175,3 +1175,9 @@ def test_returned_page_geometry_must_name_the_labeling_bundle_page() -> None:
     )
     with pytest.raises(ValueError, match="match the labeling bundle page"):
         bundle.validate_against(base)
+
+
+@pytest.mark.parametrize("path", [".", "./a", "a/./b"])
+def test_artifact_reference_rejects_dot_segments(path: str) -> None:
+    with pytest.raises(ValidationError, match="safe relative POSIX path"):
+        ArtifactReference(artifact_id="x", relative_path=path, sha256=h(1))
