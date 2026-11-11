@@ -144,6 +144,16 @@ def test_four_point_polygon_truncates_scaled_corners() -> None:
     ]
 
 
+def test_center_of_a_unit_square_pixel_box_stays_pixel() -> None:
+    center = _px(0, 0, 1, 1).center
+    assert (center.x, center.y) == (0.5, 0.5)
+    assert center.is_normalized is False
+
+
+def test_center_of_a_normalized_box_stays_normalized() -> None:
+    assert BoundingBox.from_ltrb(0.2, 0.2, 0.4, 0.4).center.is_normalized is True
+
+
 def test_finite_box_has_usable_coordinates() -> None:
     assert _px(0, 0, 10, 10).has_usable_coordinates
 

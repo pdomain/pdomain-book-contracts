@@ -249,6 +249,7 @@ class BoundingBox:
         return Point(
             (self.top_left.x + self.bottom_right.x) / 2,
             (self.top_left.y + self.bottom_right.y) / 2,
+            is_normalized=self.is_normalized,
         )
 
     @property
