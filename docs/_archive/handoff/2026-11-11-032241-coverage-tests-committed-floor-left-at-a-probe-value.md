@@ -1,19 +1,21 @@
 ---
-kind: handoff
-status: "active"
-created: "2026-11-11"
+kind: archive
+status: retired
 created_at: "2026-11-11T03:22:38Z"
 owner: "CT"
 branch: "feat/coverage-floor"
 scope: "coverage-floor"
 worktree: "/mnt/work/projects/pdomain/pdomain-book-contracts/.worktrees/coverage-floor"
 base_commit: "00c88ae9e91f9a2123a54bb5f4442575c46f56c8"
-supersedes: ""
 handoff_reason: "user_requested"
 host: "claude-code"
+created: "2026-11-11"
+last_verified: "2026-11-11"
 ---
 
 # Coverage tests committed, floor left at a probe value
+
+> **Retired — superseded by `docs/handoff/2026-11-11-043740-coverage-floor-and-geometry-fixes-committed.md`.**
 
 ## Goal
 
