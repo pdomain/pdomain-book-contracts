@@ -157,7 +157,7 @@ other path.
 - Artifacts: none.
 - Verified: 2026-11-06, `uv run pytest` in this repository, 34 passed.
 
-## Coverage is still open
+## `make test` enforces a 95 percent coverage floor
 
-This package does not enforce a coverage floor. The open item is the
-[issue index](../issues/README.md).
+`make test` measures this package with branch coverage over the tests in this
+repository and fails below 95 percent.

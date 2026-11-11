@@ -22,7 +22,7 @@ typing-extensions. There is no imaging or machine-learning stack.
 The package holds those contracts. The layout is in
 [`docs/architecture/00-overview.md`](docs/architecture/00-overview.md).
 
-Remaining work is the open coverage issue in
+No issue is open. The index is
 [`docs/issues/README.md`](docs/issues/README.md).
 
 This file is the canonical agent-guidance entry point.
@@ -37,7 +37,7 @@ tool-specific context.
 - Documentation: `docs/`.
 - No imaging or machine-learning dependency may enter this package. See
   `tests/test_torch_free_import.py`.
-- `make test` runs the test suite.
+- `make test` runs the test suite and enforces the 95 percent coverage floor.
 - `make lint` runs Ruff.
 - `make typecheck` runs basedpyright in strict mode.
 - `make build` builds the package.

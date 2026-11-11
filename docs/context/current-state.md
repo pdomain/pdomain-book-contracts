@@ -6,7 +6,7 @@
 - **Status:** active
 - **Owner:** CT
 - **Created:** 2026-09-02
-- **Last verified:** 2026-11-06
+- **Last verified:** 2026-11-10
 - **Read when:** starting repository work or checking current operational
   status.
 - **Search terms:** current state, coverage floor, remaining work.
@@ -19,36 +19,31 @@ boundary are in the
 
 ## In-flight work
 
-One item is open.
-
-- This package has no coverage floor.
-  [Extracted code left its coverage gate behind](../issues/2026-09-02-contracts-code-left-its-coverage-gate-behind.md).
+No issue is open. The coverage floor is in place, which closed
+[Extracted code left its coverage gate behind](../issues/2026-09-02-contracts-code-left-its-coverage-gate-behind.md).
 
 This repository has no plan files.
 
-The index of open issues is
+The index of issues is
 [docs/issues/README.md](../issues/README.md).
 
 ## Test health
 
-On 2026-11-06, `uv run pytest` collected 34 tests in `tests/`. They passed.
-`make test` runs that same pytest command.
+On 2026-11-10, `make test` ran 1,323 tests in `tests/` on Python 3.13. They
+passed and measured 96.92 percent with branch coverage.
 
-`pyproject.toml` has no coverage setting. The Makefile does not pass a
-coverage floor.
-
-Those 34 tests cover:
-
-- the import boundary
-- the package version
-- bounding-box image-op dispatch
-- annotation vocabularies
-- region-role mapping
-- review metadata
+`make test` runs `pytest --cov`. `pyproject.toml` sets the floor at 95 percent,
+so the command fails below that. The tests cover behaviour in every module.
 
 ## Current risks
 
-A change in this repository can shrink the tested surface without a coverage
-failure here. The open issue is that gap.
+Coverage can fall from 96.92 percent to the 95 percent floor without a failure.
+
+`BoundingBox.contains_point` now raises `ValueError` when the point and the box
+are in different coordinate systems. The `pdomain-book-tools` test
+`test_bounding_box_contains_point` passes a pixel point to a normalized box, so
+it will fail once that repository takes this change.
+
+`Point` now rejects NaN, so a saved document with a NaN coordinate fails to load.
 
 This pass did not re-run the `pdomain-book-tools` suite.

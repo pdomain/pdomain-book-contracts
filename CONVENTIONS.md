@@ -57,15 +57,14 @@ typing-extensions allowance.
 
 ## Rule: Do not read this package's coverage as a pass
 
-This package enforces no coverage floor. The tests in this repository do not
-replace the `pdomain-book-tools` suite. That suite exercises these contracts
+This package enforces a 95 percent coverage floor over the tests in this
+repository. Those tests do not replace the `pdomain-book-tools` suite. That suite exercises these contracts
 through the re-export shims. It measures none of this package.
 
 The 2026-09-02 measurement is in
 [extracted code left its coverage gate behind](docs/issues/2026-09-02-contracts-code-left-its-coverage-gate-behind.md).
 
-Do not add a floor here until enough tests live here for the number to mean
-something. Do not restore the gate by measuring this package from book-tools.
+Do not restore the gate by measuring this package from book-tools.
 
 ## Rule: Write docs clearly
 

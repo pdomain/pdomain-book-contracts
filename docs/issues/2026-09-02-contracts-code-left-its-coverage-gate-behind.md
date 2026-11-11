@@ -1,8 +1,8 @@
 ---
-Status: open
+Status: retired
 Owner: CT
 Created: 2026-09-02
-Last verified: 2026-11-07
+Last verified: 2026-11-10
 Kind: issue
 ---
 
@@ -11,9 +11,9 @@ Kind: issue
 ## Agent Index
 
 - **Kind:** issue
-- **Status:** open
+- **Status:** retired
 - **Owner:** CT
-- **Last verified:** 2026-11-07
+- **Last verified:** 2026-11-10
 - **Read when:** adding a coverage gate here, or moving tests out of `pdomain-book-tools`.
 - **Search terms:** coverage, test ownership, extraction, 87 percent floor, site-packages.
 
@@ -103,7 +103,12 @@ set from a measured baseline rather than chosen to pass.
 
 ## Resolution
 
-Open. Nothing was changed in either repository.
+Fixed on 2026-11-10 in commit `47347a6`. `make test` now measures this package with branch
+coverage and fails below 95 percent. The tests that reached that number live in this
+repository. On 2026-11-10, 1,323 tests measured 96.92 percent on Python 3.13.
+
+Moving contracts-only tests out of book-tools did not turn out to be needed for the floor.
+Whether to move them anyway is recorded in the [intent map](../context/intent-map.md).
 
 Adding `pdomain_book_contracts` to book-tools' coverage sources was tried and rejected.
 Measured that way the combined suite reports 88.2 percent, above the floor, but
