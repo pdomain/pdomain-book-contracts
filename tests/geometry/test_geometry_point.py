@@ -179,3 +179,19 @@ def test_pydantic_rejects_a_missing_field() -> None:
 def test_pydantic_json_schema_lists_the_three_fields() -> None:
     schema = TypeAdapter(Point).json_schema()
     assert schema["required"] == ["x", "y", "is_normalized"]
+
+
+@pytest.mark.parametrize(
+    "coordinates",
+    [(float("nan"), 1.0), (1.0, float("nan")), ("nan", 1.0)],
+)
+def test_nan_coordinate_is_rejected(coordinates: tuple[float, float]) -> None:
+    with pytest.raises(ValueError, match="real numbers"):
+        _ = Point(*coordinates)
+
+
+def test_nan_coordinate_is_a_validation_error_on_the_wire() -> None:
+    with pytest.raises(ValidationError, match="real numbers"):
+        _ = TypeAdapter(Point).validate_python(
+            {"x": float("nan"), "y": 1.0, "is_normalized": False}
+        )

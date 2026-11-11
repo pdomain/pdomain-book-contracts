@@ -1,3 +1,4 @@
+import math
 import sys
 from typing import cast
 
@@ -81,6 +82,11 @@ class Point:
             raise ValueError(
                 "Point coordinates must be able to be coerced to real numbers"
             ) from err
+        # NaN defeats every range and ordering check below, so stop it here.
+        if math.isnan(f):
+            raise ValueError(
+                "Point coordinates must be able to be coerced to real numbers"
+            )
         # Preserve int type when exact
         return int(f) if f.is_integer() else f
 

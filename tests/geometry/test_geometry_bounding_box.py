@@ -6,6 +6,7 @@ import math
 import pytest
 from pydantic import TypeAdapter
 from shapely.geometry import Point as ShapelyPoint
+from shapely.geometry import Polygon as ShapelyPolygon
 from shapely.geometry import box as shapely_box
 
 from pdomain_book_contracts.geometry.bounding_box import BoundingBox
@@ -152,6 +153,16 @@ def test_center_of_a_unit_square_pixel_box_stays_pixel() -> None:
 
 def test_center_of_a_normalized_box_stays_normalized() -> None:
     assert BoundingBox.from_ltrb(0.2, 0.2, 0.4, 0.4).center.is_normalized is True
+
+
+def test_nan_corner_is_rejected() -> None:
+    with pytest.raises(ValueError, match="real numbers"):
+        _ = BoundingBox.from_ltrb(float("nan"), 0, 5, 5)
+
+
+def test_empty_shapely_geometry_is_rejected() -> None:
+    with pytest.raises(ValueError, match="real numbers"):
+        _ = BoundingBox.from_shapely(ShapelyPolygon())
 
 
 def test_finite_box_has_usable_coordinates() -> None:
