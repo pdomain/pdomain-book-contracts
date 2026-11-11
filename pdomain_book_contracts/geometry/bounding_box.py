@@ -546,7 +546,17 @@ class BoundingBox:
         which is functionally equivalent but allocates two Shapely geometries
         per call. Inclusive comparison matches Shapely's ``covers`` semantics
         (closed on the boundary).
+
+        Raises:
+            ValueError: The point and the box are not in the same coordinate
+                system. A point built without a flag infers it from its
+                coordinates, so use :meth:`Point.pixel` for a pixel point that
+                lies inside the unit square.
         """
+        if self.is_normalized != point.is_normalized:
+            raise ValueError(
+                "Bounding box and point must share coordinate system (both normalized or both pixel)"
+            )
         return self.minX <= point.x <= self.maxX and self.minY <= point.y <= self.maxY
 
     @staticmethod

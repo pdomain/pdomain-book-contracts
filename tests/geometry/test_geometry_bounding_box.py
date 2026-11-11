@@ -190,6 +190,21 @@ def test_to_scaled_ltwh_is_pixel_size() -> None:
     assert box.to_scaled_ltwh(200, 100) == (20, 20, 80, 40)
 
 
+def test_contains_point_rejects_a_normalized_point_on_a_pixel_box() -> None:
+    with pytest.raises(ValueError, match="coordinate system"):
+        _ = _px(0, 0, 100, 100).contains_point(Point.normalized(0.5, 0.5))
+
+
+def test_contains_point_rejects_a_pixel_point_on_a_normalized_box() -> None:
+    box = BoundingBox.from_ltrb(0.1, 0.1, 0.9, 0.9)
+    with pytest.raises(ValueError, match="coordinate system"):
+        _ = box.contains_point(Point.pixel(0.5, 0.5))
+
+
+def test_contains_point_accepts_a_pixel_point_inside_a_unit_square_pixel_box() -> None:
+    assert _px(0, 0, 1, 1).contains_point(Point.pixel(0.5, 0.5))
+
+
 def test_contains_point_includes_the_edges() -> None:
     box = _px(10, 10, 20, 20)
     assert box.contains_point(Point(10, 10))
