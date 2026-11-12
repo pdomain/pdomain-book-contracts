@@ -23,9 +23,8 @@ The package holds those contracts. The layout starts at
 [`docs/architecture/00-overview.md`](docs/architecture/00-overview.md).
 
 Remaining work is the roadmap in
-[`docs/plans/roadmap.md`](docs/plans/roadmap.md). The open coverage issue is
-[`docs/issues/README.md`](docs/issues/README.md). Do not start a second
-coverage attempt on master while `feat/coverage-floor` is open.
+[`docs/plans/roadmap.md`](docs/plans/roadmap.md). No issue is open. The index is
+[`docs/issues/README.md`](docs/issues/README.md).
 
 This file is the canonical agent-guidance entry point.
 
@@ -39,7 +38,7 @@ tool-specific context.
 - Documentation: `docs/`.
 - No imaging or machine-learning dependency may enter this package. See
   `tests/test_torch_free_import.py`.
-- `make test` runs the test suite.
+- `make test` runs the test suite and enforces the 95 percent coverage floor.
 - `make lint` runs Ruff.
 - `make typecheck` runs basedpyright in strict mode.
 - `make build` builds the package.

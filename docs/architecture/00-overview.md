@@ -131,11 +131,11 @@ Importing the package root does not load shapely. Importing `geometry`,
   - `tests/pgdp/f2/test_structure.py` collected 14.
 - Artifacts: none.
 - Verified on 2026-11-06: `uv run pytest` in this repository, 34 passed.
-- Verified on 2026-11-12: the collector listed 79 tests. `uv run pytest` printed a dot for each and exited 0.
-- Verified on 2026-11-12: `pyproject.toml` still sets no coverage floor.
+- Verified on 2026-11-12, before this merge, at `a50c756`: the collector listed 79 tests. `uv run pytest` printed a dot for each and exited 0. `pyproject.toml` set no coverage floor.
 
-## Coverage is still open on master
+## `make test` enforces a 95 percent coverage floor
 
-This package does not enforce a coverage floor. The open item is the
-[issue index](../issues/README.md). The unmerged attempt lives on
-`feat/coverage-floor` and is recorded in the [roadmap](../plans/roadmap.md).
+`make test` measures this package with branch coverage over the tests in this
+repository and fails below 95 percent. The handoff on the merged branch
+recorded 1,323 tests at 96.92 percent on Python 3.13. Open work that remains
+is the [roadmap](../plans/roadmap.md).

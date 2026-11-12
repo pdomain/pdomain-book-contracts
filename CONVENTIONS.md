@@ -189,12 +189,15 @@ quietly grow.
 
 <!-- workspace-conventions:end -->
 
-## Rule: The coverage attempt already has a branch
+## Rule: The coverage floor sits outside the synced block
 
-`feat/coverage-floor` is the unmerged attempt to add a floor. The
-[roadmap](docs/plans/roadmap.md) records the branch, the geometry fixes, and
-the owner decisions still open on it.
+`make test` enforces a 95 percent coverage floor over the tests in this
+repository. Those tests do not replace the `pdomain-book-tools` suite.
 
-Do not start a second coverage attempt on master while that branch is open.
-This section sits outside the workspace-conventions block so a later sync of
-that block does not drop the branch name.
+The rule inside the workspace-conventions block still says this package
+enforces no floor, and that a floor should wait. That block is shared text.
+This section is the repo-specific rule, so a later sync does not drop the floor.
+
+Do not add a second floor. Do not restore the gate by measuring this package
+from book-tools. The open owner decisions are on the
+[roadmap](docs/plans/roadmap.md).

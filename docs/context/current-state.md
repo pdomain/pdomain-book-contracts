@@ -19,28 +19,23 @@ boundary start at the
 
 ## In-flight work
 
-Open work is the [roadmap](../plans/roadmap.md). The one open issue is the
-missing coverage floor.
+Open work is the [roadmap](../plans/roadmap.md). No issue is open. The coverage
+floor is in place, which closed
 [Extracted code left its coverage gate behind](../issues/2026-09-02-contracts-code-left-its-coverage-gate-behind.md).
 
-`feat/coverage-floor` holds an unmerged 95 percent floor and three geometry
-fixes. Do not start a second attempt on master. The roadmap has the branch
-facts.
-
-The index of open issues is
+The index of issues is
 [docs/issues/README.md](../issues/README.md).
 
 ## Test health
 
 On 2026-11-06, `uv run pytest` collected 34 tests in `tests/`. They passed.
-On 2026-11-12 the collector listed 79 tests, and `uv run pytest` exited 0.
-`make test` runs that same pytest command.
+On 2026-11-12, before this merge, the collector listed 79 tests, and `uv run pytest` exited 0.
 
-`pyproject.toml` has no coverage setting. The Makefile does not pass a
-coverage floor.
+On 2026-11-10, `make test` on `feat/coverage-floor` ran 1,323 tests in `tests/` on Python 3.13. They passed and measured 96.92 percent with branch coverage.
 
-The 79 tests cover the 34, plus layout text hints, F2 structure, and the
-PGDP matching adapters. The earlier 34 cover:
+`make test` runs `pytest --cov`. `pyproject.toml` sets the floor at 95 percent, so the command fails below that.
+
+The 79 tests cover the 34, plus layout text hints, F2 structure, and the PGDP matching adapters. The merged suite covers behaviour in every module. The earlier 34 cover:
 
 - the import boundary
 - the package version
@@ -51,7 +46,13 @@ PGDP matching adapters. The earlier 34 cover:
 
 ## Current risks
 
-A change in this repository can shrink the tested surface without a coverage
-failure here. The open issue is that gap.
+Coverage can fall from 96.92 percent to the 95 percent floor without a failure.
+
+`BoundingBox.contains_point` now raises `ValueError` when the point and the box
+are in different coordinate systems. The `pdomain-book-tools` test
+`test_bounding_box_contains_point` passes a pixel point to a normalized box, so
+it will fail once that repository takes this change.
+
+`Point` now rejects NaN, so a saved document with a NaN coordinate fails to load.
 
 This pass did not re-run the `pdomain-book-tools` suite.

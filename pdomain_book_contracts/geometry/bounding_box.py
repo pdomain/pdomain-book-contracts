@@ -249,6 +249,7 @@ class BoundingBox:
         return Point(
             (self.top_left.x + self.bottom_right.x) / 2,
             (self.top_left.y + self.bottom_right.y) / 2,
+            is_normalized=self.is_normalized,
         )
 
     @property
@@ -271,11 +272,10 @@ class BoundingBox:
         """Return True when all four corners are finite numbers suitable for rendering.
 
         "Finite" means not ``None``, not ``NaN``, not ``+inf`` / ``-inf``. A
-        validly constructed :class:`BoundingBox` cannot have ``None`` corners
-        (Shapely-backed ``Point`` coordinates are always real), but it can
-        receive ``NaN`` / ``inf`` from upstream Shapely operations whose result
-        geometry is empty (e.g. ``buffer()`` collapsing a thin box). Rendering
-        code uses this guard to skip drawing rather than crash.
+        validly constructed :class:`BoundingBox` cannot have ``None`` or
+        ``NaN`` corners, because :class:`Point` rejects ``NaN``, but it can
+        still hold ``+inf``. Rendering code uses this guard to skip drawing
+        rather than crash.
 
         Genuine attribute / arithmetic errors are deliberately *not* swallowed
         here — if ``minX`` etc. raise, that is a real bug and should surface.
@@ -545,7 +545,17 @@ class BoundingBox:
         which is functionally equivalent but allocates two Shapely geometries
         per call. Inclusive comparison matches Shapely's ``covers`` semantics
         (closed on the boundary).
+
+        Raises:
+            ValueError: The point and the box are not in the same coordinate
+                system. A point built without a flag infers it from its
+                coordinates, so use :meth:`Point.pixel` for a pixel point that
+                lies inside the unit square.
         """
+        if self.is_normalized != point.is_normalized:
+            raise ValueError(
+                "Bounding box and point must share coordinate system (both normalized or both pixel)"
+            )
         return self.minX <= point.x <= self.maxX and self.minY <= point.y <= self.maxY
 
     @staticmethod

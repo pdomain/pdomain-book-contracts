@@ -1,5 +1,5 @@
 ---
-Status: open
+Status: retired
 Owner: CT
 Created: 2026-09-02
 Last verified: 2026-11-12
@@ -11,7 +11,7 @@ Kind: issue
 ## Agent Index
 
 - **Kind:** issue
-- **Status:** open
+- **Status:** retired
 - **Owner:** CT
 - **Last verified:** 2026-11-12
 - **Read when:** adding a coverage gate here, or moving tests out of `pdomain-book-tools`.
@@ -50,8 +50,8 @@ Verified on 2026-11-07:
 Checked again on 2026-11-12, on master at `a50c756`:
 
 - The collector listed 79 tests, and `uv run pytest` exited 0.
-- `pyproject.toml` and the Makefile still set no coverage floor.
-- `feat/coverage-floor` at `673e5d9` is an unmerged attempt. This issue stays open on master.
+- `pyproject.toml` and the Makefile set no coverage floor at that commit.
+- `feat/coverage-floor` at `673e5d9` held the floor. This merge brings that work onto master.
 
 The 34-test count above is the 2026-11-07 measurement, not the current suite.
 
@@ -82,7 +82,7 @@ Book-tools kept measuring only itself, and this repository never had a floor to 
 - This package enforces no coverage floor.
 - The September baseline was 12 tests reaching 36 percent, much of it import-time
   execution. The 2026-11-07 suite of 34 tests had no measured coverage baseline.
-  On 2026-11-12 the suite collected 79 tests and still has no measured baseline.
+  On 2026-11-12, before this merge, the suite on `a50c756` collected 79 tests and had no measured baseline.
 - Book-tools' coverage figure excludes this package while appearing to cover the moved code.
 
 ## What is NOT broken
@@ -112,7 +112,12 @@ set from a measured baseline rather than chosen to pass.
 
 ## Resolution
 
-Open. Nothing was changed in either repository.
+Fixed on 2026-11-10 in commit `47347a6`. `make test` now measures this package with branch
+coverage and fails below 95 percent. The tests that reached that number live in this
+repository. On 2026-11-10, 1,323 tests measured 96.92 percent on Python 3.13.
+
+Moving contracts-only tests out of book-tools did not turn out to be needed for the floor.
+Whether to move them anyway is recorded in the [intent map](../context/intent-map.md).
 
 Adding `pdomain_book_contracts` to book-tools' coverage sources was tried and rejected.
 Measured that way the combined suite reports 88.2 percent, above the floor, but

@@ -10,14 +10,17 @@
 - **Read when:** looking up open work in this repository.
 - **Search terms:** issues, remaining work, coverage floor.
 
-## This package has no coverage floor
+## No issues are open
 
-- This package has no coverage floor. The tests here do not replace the
-  `pdomain-book-tools` suite. That suite exercises these contracts. It does
-  not measure their coverage.
+The coverage floor is on master. The issue that tracked it is retired.
+
+## Resolved
+
+- `make test` now enforces a 95 percent coverage floor. The tests here do not
+  replace the `pdomain-book-tools` suite. That suite exercises these contracts.
+  It does not measure their coverage.
   [Extracted code left its coverage gate behind](2026-09-02-contracts-code-left-its-coverage-gate-behind.md).
 
 Shipped behavior starts at the [architecture overview](../architecture/00-overview.md).
 
-Other open work, including the unmerged coverage branch, is the
-[roadmap](../plans/roadmap.md).
+Other open work is the [roadmap](../plans/roadmap.md).

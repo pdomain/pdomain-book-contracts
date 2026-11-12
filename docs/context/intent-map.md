@@ -17,12 +17,7 @@ It does not repeat the branch measurements.
 
 ## Active work
 
-- This package has no coverage floor. The tests that live here do not
-  replace the `pdomain-book-tools` suite. That suite exercises these
-  contracts. It does not measure their coverage.
-  [Extracted code left its coverage gate behind](../issues/2026-09-02-contracts-code-left-its-coverage-gate-behind.md).
-- `feat/coverage-floor` is the unmerged attempt. Do not start another one
-  on master.
+None recorded.
 
 ## Deferred work
 
@@ -35,17 +30,22 @@ It does not repeat the branch measurements.
 
 ## Needs owner decision
 
+- Whether `Point` should reject infinity as it now rejects NaN. Infinity is
+  still accepted, and `BoundingBox.has_usable_coordinates` exists to catch it.
+  A saved `+inf` coordinate also serializes as non-standard JSON.
+- Whether to fix two more places that weaken the `is_normalized` rule.
+  `BoundingBox.get_four_point_scaled_polygon_list` scales a pixel box as if it
+  were normalized. `BoundingBox.from_points` drops the flag of `Point` inputs,
+  so two pixel points inside the unit square make a normalized box.
+- Whether to move the contracts-only tests out of `pdomain-book-tools`. The
+  [retired coverage issue](../issues/2026-09-02-contracts-code-left-its-coverage-gate-behind.md)
+  left this open, and the coverage floor did not need it.
 - Whether to put back `MatchType.WORD_NEARLY_EQUAL_DUE_TO_PUNCTUATION` and
   `MatchType.LINE_REPLACE_WORD_EQUAL`. Both were removed because nothing in
   the matching pipeline assigned them. The comments in
   `pdomain_book_contracts/matching/match_type.py` say to restore each one
   only when the matching behavior that would assign it exists. No issue
   tracks that work.
-- Whether to move the contracts-only tests out of `pdomain-book-tools`.
-- On `feat/coverage-floor`, whether `Point` should also reject infinity,
-  and whether to fix `get_four_point_scaled_polygon_list` and `from_points`.
-  Those three are recorded in the branch handoff. They are not decisions
-  on master.
 
 ## Rejected for now
 

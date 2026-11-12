@@ -29,22 +29,20 @@ No new repository in the list below should be created from this page alone.
 - [Layout contracts](../architecture/layout-contracts.md)
 - [Matching](../architecture/matching.md)
 - [PGDP readers](../architecture/pgdp-readers.md)
+- Coverage floor at 95 percent, the three geometry fixes, and the PGDP N, artifact-path, and F2 page-key fixes from `feat/coverage-floor` (`2bd0bcb` through `673e5d9`). The handoff recorded `make ci AI=1` exiting 0 on `5f5022c`, and 1,323 tests at 96.92 percent on Python 3.13. On 2026-11-12, after this merge, `uv run pytest --cov` exited 0 and reported 96.92 percent. The collector listed 1,323 tests.
 
 ## Open on master
 
-- This package has no coverage floor. [Extracted code left its coverage gate behind](../issues/2026-09-02-contracts-code-left-its-coverage-gate-behind.md). On 2026-11-12 the collector listed 79 tests. On that date, `pyproject.toml` still had no coverage setting.
-- `feat/coverage-floor` is the unmerged attempt. The worktree is `/mnt/work/projects/pdomain/pdomain-book-contracts/.worktrees/coverage-floor` at `673e5d9`. Its handoff, dated 2026-11-11, records a 95 percent floor. The same handoff records `make ci AI=1` exiting 0 on `5f5022c`. It records 1,323 tests at 96.92 percent on Python 3.13. The same handoff records three geometry fixes. `BoundingBox.center` keeps the box's coordinate flag. `BoundingBox.contains_point` raises `ValueError` when the point and the box use different coordinate systems. `Point` rejects NaN. This checkout did not re-run that suite. The branch is not merged, pushed, tagged, or released. Do not start a second coverage attempt on master.
-- `feat/coverage-floor` commits `4f43a82` through `00c88ae` are still this package's work. PGDP `['N]` and `['n]` map to Ń and ń, and `[`N]` and `[`n]` map to Ǹ and ǹ. An artifact path rejects a raw `.` segment. A non-string F2 page key raises `PydanticCustomError`. Those commits stay on the branch.
-- Whether this package should take the contracts-only tests out of `pdomain-book-tools` is still an owner decision. The coverage issue says that separation does not exist yet. The branch handoff leaves the same decision open.
+- Whether this package should take the contracts-only tests out of `pdomain-book-tools` is still an owner decision. The retired coverage issue says that separation does not exist yet. The floor did not need that move.
 - `WORD_NEARLY_EQUAL_DUE_TO_PUNCTUATION` and `LINE_REPLACE_WORD_EQUAL` are absent from `MatchType`. Comments in `pdomain_book_contracts/matching/match_type.py` say to restore each one only when the pipeline would assign it. No issue tracks that work.
 - Seven package docstrings name import edges the source does not have: `layout`, `typography`, `matching`, `ocr`, `sources/pgdp`, `sources/pgdp/f2`, and `annotation`. The docstring on `test_numpy_loads_only_via_shapely` does too. The corrected graph is the [module layout](../architecture/module-layout.md). The docstrings themselves are still the old text.
 - Importing `PGDPExport` loads shapely, because `sources/pgdp/__init__.py` imports the F2 parser and that parser reaches `BoundingBox`. The measurement is in the [PGDP readers](../architecture/pgdp-readers.md) doc. A lazy package init would fix the import without a new repository. That change is not started.
 
-The branch handoff also records three owner decisions that are not on master.
+The NaN rejection, the center flag, and the mixed-coordinate check are on master. Three owner decisions from that work remain open.
 
 `Point` still accepts infinity, because a test builds an infinite corner and the NaN fix did not cover infinity.
 
-`get_four_point_scaled_polygon_list` scales a pixel box as if it were normalized. `from_points` drops the flag of `Point` inputs. Neither of those two is fixed on the branch.
+`get_four_point_scaled_polygon_list` scales a pixel box as if it were normalized. `from_points` drops the flag of `Point` inputs. Neither of those two is fixed.
 
 After a contracts release, `pdomain-book-tools` test `test_bounding_box_contains_point` passes a pixel point to a normalized box. It will fail until it expects `ValueError` or uses a normalized point. The book-tools geometry issue stays open until that suite is updated.
 
@@ -100,7 +98,7 @@ Keep one list of unfinished work for this package. Point shipped behavior at `do
 
 ## Architecture
 
-The open items stay inside `pdomain_book_contracts`. The coverage floor and the geometry fixes already exist on `feat/coverage-floor`. The docstring corrections and a lazy `sources/pgdp` init would land in this repository.
+The open items stay inside `pdomain_book_contracts`. The coverage floor and the geometry fixes are on master. The docstring corrections and a lazy `sources/pgdp` init would land in this repository.
 
 Moving only `sources/` would cycle. That code imports `typography` and `layout` here. `pgdp_visible.py` here would import the new package.
 
@@ -114,13 +112,13 @@ The areas in "Do not split these out" stay subpackages.
 
 The package remains pure Python. Runtime dependencies stay pydantic, pydantic-core, shapely, regex, and typing-extensions. Tests stay pytest.
 
-The coverage floor, when it lands, is the one already measured on `feat/coverage-floor`.
+The coverage floor is 95 percent, the floor measured on `feat/coverage-floor`.
 
 ## Global Constraints
 
 - Do not add torch, doctr, torchvision, cv2, numpy, pandas, matplotlib, transformers, or ipython.
 - `CONVENTIONS.md` bans ipython even as a test dependency. The lightness test does not currently name ipython.
 - Numpy may load through shapely. It stays off the declared dependency list.
-- Do not start a second coverage floor on master while `feat/coverage-floor` is open.
+- The coverage floor is the 95 percent floor in `pyproject.toml`. Do not add a second floor.
 - Do not create a repository from the candidate list until its trigger is true and the owner accepts it.
 - Do not move the PGDP readers into the api client or the measure repository.

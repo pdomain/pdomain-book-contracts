@@ -37,14 +37,14 @@ existing imports through `pdomain-book-tools` keep working.
 
 Nothing depends on `pdomain-book-contracts` in the other direction.
 
-## Shared contracts, and one open coverage issue
+## Shared contracts with a coverage floor
 
 The package holds the shared contracts. The layout and the dependency
 boundary are in the
 [architecture overview](docs/architecture/00-overview.md).
 
-Remaining work is the [roadmap](docs/plans/roadmap.md). The one open issue
-is the missing coverage floor. See the
+Remaining work is the [roadmap](docs/plans/roadmap.md). No issue is open.
+`make test` enforces a 95 percent coverage floor. See the
 [issue index](docs/issues/README.md).
 
 ## Install

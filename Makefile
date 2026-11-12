@@ -24,7 +24,7 @@ update-hooks: ## Bump hooks to their latest releases, frozen to commit SHAs
 	uv run pre-commit autoupdate --freeze
 
 test:
-	uv run pytest
+	uv run pytest --cov
 
 lint:
 	uv run ruff check .
