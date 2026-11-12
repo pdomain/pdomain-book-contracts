@@ -1,3 +1,11 @@
+---
+Status: active
+Owner: CT
+Created: 2026-09-02
+Last verified: 2026-11-12
+Kind: architecture
+---
+
 # Overview
 
 ## Agent Index
@@ -6,7 +14,7 @@
 - **Status:** active
 - **Owner:** CT
 - **Created:** 2026-09-02
-- **Last verified:** 2026-11-06
+- **Last verified:** 2026-11-12
 - **Read when:** orienting on the package's purpose, dependency boundary, or
   module layout before adding a contract.
 - **Search terms:** book contracts, geometry, typography, matching, ocr,
@@ -17,65 +25,20 @@ pdomain OCR suite. A consumer can use these types and algorithms without an
 imaging stack or a machine-learning stack.
 
 Runtime dependencies are pydantic, pydantic-core, shapely, regex, and
-typing-extensions. Python 3.11 takes `override` from typing-extensions.
-Python 3.12 and later take it from the standard library.
+typing-extensions. The version bounds are in the
+[module layout](module-layout.md).
 
-## What the package holds
+Python 3.11 takes `override` from typing-extensions. Python 3.12 and later
+take it from the standard library.
 
-Every subpackage below is implemented. `data` holds the vendored SPDX list
-and has no runtime code.
+Shipped behavior is split across these pages.
 
-```text
-pdomain_book_contracts/
-    geometry/        point.py, bounding_box.py
-    text/            label_normalization.py, text_normalize.py
-    annotation/      roles.py, page_kind.py, provenance.py, mappings.py
-    typography/      labels.py, spans.py, normalization.py, records.py,
-                     annotations.py, exchange.py, book_manifest.py, review.py
-    matching/        alignment.py, engine.py, models.py, legacy_projection.py,
-                     pgdp_continuations.py, match_type.py, character_groups.py
-    ocr/             character.py, glyph_annotations.py, provenance.py,
-                     review.py, gt_orphans.py, blob_protocol.py
-    layout/          types.py, regions.py
-    sources/pgdp/    rounds.py, offsets.py,
-                     f2/{tokens,parser,project_rules,warnings}.py
-    data/            spdx_licenses.json
-    licensing.py
-    _schemas.py
-```
+- [Module layout](module-layout.md) lists every area and the import edges measured on 2026-11-12.
+- [Layout contracts](layout-contracts.md) covers detector regions, the role map, text hints, and reviewed structure.
+- [Matching](matching.md) covers the match graph and the PGDP adapters.
+- [PGDP readers](pgdp-readers.md) covers the round container and the F2 parser.
 
-`annotation` holds the shared words.
-
-- `RegionRole` has 34 roles.
-- `PageKind` names the kind of page.
-- `LabelSource`, `KnowledgeState`, and `ConfidenceTier` are the provenance
-  enums.
-
-`mappings.py` maps a layout `RegionType` to a `RegionRole`.
-
-- A page number stays a page number. It does not become a footer.
-- Figure and illustration stay distinct.
-
-`licensing.py` validates SPDX license identifiers against the vendored list
-in `data/spdx_licenses.json`.
-
-## How the modules import each other
-
-These are the imports the modules make.
-
-- `_schemas`, `text`, `layout`, `licensing`, and `data` import nothing else
-  in this package.
-- `licensing` reads `data/spdx_licenses.json` as package data.
-- `geometry` imports `_schemas`.
-- `annotation` imports `layout`. That edge is the `RegionType` to
-  `RegionRole` map.
-- `typography` imports `geometry` and `annotation`.
-- `matching` imports `geometry` and `typography`.
-- `ocr` imports `_schemas`, `geometry`, `text`, and `annotation`.
-- `sources/pgdp` imports `typography`.
-
-Importing the `annotation` package also imports `layout`, because
-`annotation/__init__.py` imports the mapping.
+Open work is the [roadmap](../plans/roadmap.md).
 
 ## Image operations stay in book-tools
 
@@ -106,16 +69,21 @@ matplotlib, and transformers.
 
 `test_numpy_loads_only_via_shapely` asserts that importing shapely loads
 numpy. The same test asserts that importing this package loads both shapely
-and numpy. That test does not prove that numpy cannot also load by some
-other path.
+and numpy. That test does not prove there is no other path that also loads
+numpy.
+
+Importing the package root does not load shapely. Importing `geometry`,
+`typography`, `ocr`, `matching`, or `sources.pgdp` does. `annotation`,
+`layout`, `text`, and `licensing` do not. The measurements are in the
+[module layout](module-layout.md).
 
 ## Evidence
 
-- Code: `pdomain_book_contracts/` as listed under "What the package holds".
+- Code: `pdomain_book_contracts/` as listed in the [module layout](module-layout.md).
   Image-op dispatch is `register_image_ops` and `ImageOpsUnavailableError`
   in `pdomain_book_contracts/geometry/bounding_box.py`. The dependency list
   is `pyproject.toml`.
-- Tests:
+- Tests that pin the boundary and the shared words:
   - `tests/test_torch_free_import.py`:
     `test_package_imports_without_heavy_stack`,
     `test_every_subpackage_imports_without_heavy_stack`,
@@ -154,10 +122,20 @@ other path.
     `test_a_rejection_is_expressible`,
     `test_an_f2_supplied_answer_is_distinguishable_from_a_typed_one`,
     `test_a_legacy_dict_without_the_new_keys_still_loads`.
+- Later tests, not in the 2026-11-06 list:
+  - `tests/layout/test_text_hints.py` collected 10.
+  - `tests/matching/test_pgdp_bounded.py` collected 6.
+  - `tests/matching/test_pgdp_engine_regression.py` collected 1.
+  - `tests/matching/test_pgdp_layout_projection.py` collected 8.
+  - `tests/matching/test_pgdp_visible.py` collected 6.
+  - `tests/pgdp/f2/test_structure.py` collected 14.
 - Artifacts: none.
-- Verified: 2026-11-06, `uv run pytest` in this repository, 34 passed.
+- Verified on 2026-11-06: `uv run pytest` in this repository, 34 passed.
+- Verified on 2026-11-12: the collector listed 79 tests. `uv run pytest` printed a dot for each and exited 0.
+- Verified on 2026-11-12: `pyproject.toml` still sets no coverage floor.
 
-## Coverage is still open
+## Coverage is still open on master
 
 This package does not enforce a coverage floor. The open item is the
-[issue index](../issues/README.md).
+[issue index](../issues/README.md). The unmerged attempt lives on
+`feat/coverage-floor` and is recorded in the [roadmap](../plans/roadmap.md).

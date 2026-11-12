@@ -6,7 +6,7 @@
 - **Status:** active
 - **Owner:** CT
 - **Created:** 2026-09-02
-- **Last verified:** 2026-11-06
+- **Last verified:** 2026-11-12
 - **Provenance:** agent-authored at repository creation, following the
   workspace-shared conventions block used across sibling repositories.
 - **Disposition:** Retained as authoritative repository conventions.
@@ -50,8 +50,9 @@ typing-extensions allowance.
 - A `TYPE_CHECKING`-only import of a `pdomain-book-tools` type, such as
   `Block`, `Page`, or `Word`, for an annotation. This does not break the
   runtime boundary. But it does mean the package cannot type-check alone.
-  See the book-contracts module layout spec in `pdomain-ops` before adding
-  one.
+  See the [module layout](docs/architecture/module-layout.md) before adding
+  one. The extraction spec in `pdomain-ops` is the 2026-09-02 design, and
+  this repository's layout doc is the current graph.
 
 <!-- workspace-conventions:start -->
 
@@ -187,3 +188,13 @@ quietly grow.
   refactor — CT decides whether to drop the suppression.
 
 <!-- workspace-conventions:end -->
+
+## Rule: The coverage attempt already has a branch
+
+`feat/coverage-floor` is the unmerged attempt to add a floor. The
+[roadmap](docs/plans/roadmap.md) records the branch, the geometry fixes, and
+the owner decisions still open on it.
+
+Do not start a second coverage attempt on master while that branch is open.
+This section sits outside the workspace-conventions block so a later sync of
+that block does not drop the branch name.

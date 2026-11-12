@@ -6,7 +6,7 @@
 - **Status:** active
 - **Owner:** CT
 - **Created:** 2026-09-02
-- **Last verified:** 2026-11-06
+- **Last verified:** 2026-11-12
 - **Provenance:** agent-authored at repository creation.
 - **Disposition:** Retained as the project entry point.
 
@@ -43,8 +43,9 @@ The package holds the shared contracts. The layout and the dependency
 boundary are in the
 [architecture overview](docs/architecture/00-overview.md).
 
-Remaining work is one open issue. This package has no coverage floor. See
-the [issue index](docs/issues/README.md).
+Remaining work is the [roadmap](docs/plans/roadmap.md). The one open issue
+is the missing coverage floor. See the
+[issue index](docs/issues/README.md).
 
 ## Install
 

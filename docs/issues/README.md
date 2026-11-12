@@ -6,7 +6,7 @@
 - **Status:** active
 - **Owner:** CT
 - **Created:** 2026-11-06
-- **Last verified:** 2026-11-06
+- **Last verified:** 2026-11-12
 - **Read when:** looking up open work in this repository.
 - **Search terms:** issues, remaining work, coverage floor.
 
@@ -17,6 +17,7 @@
   not measure their coverage.
   [Extracted code left its coverage gate behind](2026-09-02-contracts-code-left-its-coverage-gate-behind.md).
 
-Shipped behavior is the [architecture overview](../architecture/00-overview.md).
+Shipped behavior starts at the [architecture overview](../architecture/00-overview.md).
 
-This repository has no plan files.
+Other open work, including the unmerged coverage branch, is the
+[roadmap](../plans/roadmap.md).

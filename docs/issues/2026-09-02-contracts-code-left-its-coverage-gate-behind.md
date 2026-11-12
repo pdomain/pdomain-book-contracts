@@ -2,7 +2,7 @@
 Status: open
 Owner: CT
 Created: 2026-09-02
-Last verified: 2026-11-07
+Last verified: 2026-11-12
 Kind: issue
 ---
 
@@ -13,7 +13,7 @@ Kind: issue
 - **Kind:** issue
 - **Status:** open
 - **Owner:** CT
-- **Last verified:** 2026-11-07
+- **Last verified:** 2026-11-12
 - **Read when:** adding a coverage gate here, or moving tests out of `pdomain-book-tools`.
 - **Search terms:** coverage, test ownership, extraction, 87 percent floor, site-packages.
 
@@ -47,6 +47,14 @@ Verified on 2026-11-07:
   Its `.coveragerc.cpu` also measures only that package and excludes `*/site-packages/*`.
 - Book-tools' `geometry/point.py` still re-exports the contracts `Point` type.
 
+Checked again on 2026-11-12, on master at `a50c756`:
+
+- The collector listed 79 tests, and `uv run pytest` exited 0.
+- `pyproject.toml` and the Makefile still set no coverage floor.
+- `feat/coverage-floor` at `673e5d9` is an unmerged attempt. This issue stays open on master.
+
+The 34-test count above is the 2026-11-07 measurement, not the current suite.
+
 The measurements below are from 2026-09-02. Coverage was not remeasured, and the
 book-tools suite was not rerun during the November check.
 
@@ -73,7 +81,8 @@ Book-tools kept measuring only itself, and this repository never had a floor to 
 
 - This package enforces no coverage floor.
 - The September baseline was 12 tests reaching 36 percent, much of it import-time
-  execution. The current 34-test suite has no measured coverage baseline.
+  execution. The 2026-11-07 suite of 34 tests had no measured coverage baseline.
+  On 2026-11-12 the suite collected 79 tests and still has no measured baseline.
 - Book-tools' coverage figure excludes this package while appearing to cover the moved code.
 
 ## What is NOT broken
