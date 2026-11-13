@@ -33,7 +33,7 @@ On 2026-11-12, before this merge, the collector listed 79 tests, and `uv run pyt
 
 On 2026-11-10, `make test` on `feat/coverage-floor` ran 1,323 tests in `tests/` on Python 3.13. They passed and measured 96.92 percent with branch coverage.
 
-`make test` runs `pytest --cov`. `pyproject.toml` sets the floor at 95 percent, so the command fails below that.
+`just test` runs `uv run pytest -n auto --cov`. `pyproject.toml` sets the floor at 95 percent, so the command fails below that.
 
 The 79 tests cover the 34, plus layout text hints, F2 structure, and the PGDP matching adapters. The merged suite covers behaviour in every module. The earlier 34 cover:
 

@@ -44,7 +44,7 @@ boundary are in the
 [architecture overview](docs/architecture/00-overview.md).
 
 Remaining work is the [roadmap](docs/plans/roadmap.md). No issue is open.
-`make test` enforces a 95 percent coverage floor. See the
+`just test` enforces a 95 percent coverage floor. See the
 [issue index](docs/issues/README.md).
 
 ## Install
@@ -56,8 +56,8 @@ pip install pdomain-book-contracts
 ## Development
 
 ```bash
-make setup   # uv sync
-make ci      # lint, typecheck, test, build, docgraph check
+just setup   # install the lock and hooks
+just ci      # setup, hooks, lint-check, typecheck, test, build, docgraph
 ```
 
 See [`AGENTS.md`](AGENTS.md) for the full command reference.

@@ -38,11 +38,11 @@ tool-specific context.
 - Documentation: `docs/`.
 - No imaging or machine-learning dependency may enter this package. See
   `tests/test_torch_free_import.py`.
-- `make test` runs the test suite and enforces the 95 percent coverage floor.
-- `make lint` runs Ruff.
-- `make typecheck` runs basedpyright in strict mode.
-- `make build` builds the package.
-- `make ci` runs the full repository gate: lint, typecheck, test, build, and
+- `just test` runs the test suite and enforces the 95 percent coverage floor.
+- `just lint` fixes imports and lint errors.
+- `just typecheck` runs basedpyright in strict mode.
+- `just build` builds the package.
+- `just ci` runs setup, pre-commit checks, read-only lint, typecheck, test, build, and
   `docgraph check --strict`.
 - Use `uv run` for Python tools and scripts.
 - Route new durable reader-facing documents through `writing-docs:write-readably`.

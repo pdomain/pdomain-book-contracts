@@ -16,7 +16,7 @@ The coverage floor is on master. The issue that tracked it is retired.
 
 ## Resolved
 
-- `make test` now enforces a 95 percent coverage floor. The tests here do not
+- `just test` now enforces a 95 percent coverage floor. The tests here do not
   replace the `pdomain-book-tools` suite. That suite exercises these contracts.
   It does not measure their coverage.
   [Extracted code left its coverage gate behind](2026-09-02-contracts-code-left-its-coverage-gate-behind.md).

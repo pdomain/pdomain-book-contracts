@@ -136,7 +136,7 @@ all encodings. `# noqa: RUF00x` masks the problem instead of fixing it.
 ## Rule: Use `uv run` for all Python and tool invocation
 
 **The rule.** Invoke Python, pytest, ruff, and basedpyright through `uv run`.
-Never call bare `python`, `python3`, or `pytest` from a Makefile target or CI
+Never call bare `python`, `python3`, or `pytest` from a just recipe or CI
 step.
 
 **Why.** Direct invocation skips the project's `.venv` and the lockfile-pinned
@@ -146,7 +146,7 @@ fast (<200 ms warm) and always selects the project venv.
 
 **Common high-confidence violations** (bot auto-fix candidates)
 
-- `python -m pytest` or `python3 script.py` in any `Makefile` or CI step.
+- `python -m pytest` or `python3 script.py` in any `justfile` or CI step.
 - `ruff check` or `basedpyright` (bare) in scripts that don't activate a venv first.
 
 **Common judgment-call violations** (bot flags, CT decides)
@@ -191,7 +191,7 @@ quietly grow.
 
 ## Rule: The coverage floor sits outside the synced block
 
-`make test` enforces a 95 percent coverage floor over the tests in this
+`just test` enforces a 95 percent coverage floor over the tests in this
 repository. Those tests do not replace the `pdomain-book-tools` suite.
 
 The rule inside the workspace-conventions block still says this package

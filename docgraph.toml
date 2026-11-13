@@ -24,7 +24,7 @@ reference_exclude = ['agent/**', 'agents/**', 'skills/**', 'prompts/**', '.claud
 "issues/**" = { kind = "issue", status = "active" }
 "decisions/**" = { kind = "decision", status = "active" }
 
-# rules are ON; run `make`/CI with `docgraph check --advisory` until the baseline is clean, then drop --advisory.
+# Rules are enabled; `just ci` runs `docgraph check --strict`.
 [workflow]
 enabled = true
 enforce_frontmatter_on_touched = true
