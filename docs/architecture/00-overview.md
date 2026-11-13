@@ -33,7 +33,7 @@ take it from the standard library.
 
 Shipped behavior is split across these pages.
 
-- [Module layout](module-layout.md) lists every area and the import edges measured on 2026-11-12.
+- [Module layout](module-layout.md) is the package tree, why each area sits where it does, and the import edges measured on 2026-11-12.
 - [Layout contracts](layout-contracts.md) covers detector regions, the role map, text hints, and reviewed structure.
 - [Matching](matching.md) covers the match graph and the PGDP adapters.
 - [PGDP readers](pgdp-readers.md) covers the round container and the F2 parser.
