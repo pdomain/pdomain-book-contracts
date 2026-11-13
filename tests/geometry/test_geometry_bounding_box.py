@@ -212,6 +212,18 @@ def test_contains_point_rejects_a_pixel_point_on_a_normalized_box() -> None:
         _ = box.contains_point(Point.pixel(0.5, 0.5))
 
 
+def test_normalized_box_does_not_accept_a_pixel_point() -> None:
+    box = BoundingBox.from_ltrb(0, 0, 1, 1)
+    inside = Point.pixel(0.5, 0.5)
+    outside = Point(1.5, 1.5)
+    assert box.is_normalized is True
+    assert inside.is_normalized is False
+    assert outside.is_normalized is False
+    for pixel in (inside, outside):
+        with pytest.raises(ValueError, match="coordinate system"):
+            _ = box.contains_point(pixel)
+
+
 def test_contains_point_accepts_a_pixel_point_inside_a_unit_square_pixel_box() -> None:
     assert _px(0, 0, 1, 1).contains_point(Point.pixel(0.5, 0.5))
 
