@@ -6,7 +6,7 @@
 - **Status:** active
 - **Owner:** CT
 - **Created:** 2026-09-02
-- **Last verified:** 2026-11-12
+- **Last verified:** 2026-11-13
 - **Read when:** checking whether a change is planned, deferred, or rejected
   before starting new work.
 - **Search terms:** intent map, deferred work, needs owner decision,
@@ -18,6 +18,11 @@ It does not repeat the branch measurements.
 ## Active work
 
 None recorded.
+
+The coverage and geometry branch merged in `175078d`. Its branch-review
+handoff is retired; the [geometry architecture](../architecture/geometry-and-validation.md)
+holds the shipped behavior. Retirement closes those resume instructions,
+not the deferred work or owner decisions below.
 
 ## Deferred work
 

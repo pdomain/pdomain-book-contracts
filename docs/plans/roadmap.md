@@ -29,6 +29,7 @@ No new repository in the list below should be created from this page alone.
 - [Layout contracts](../architecture/layout-contracts.md)
 - [Matching](../architecture/matching.md)
 - [PGDP readers](../architecture/pgdp-readers.md)
+- [Geometry and input validation](../architecture/geometry-and-validation.md)
 - Coverage floor at 95 percent, the three geometry fixes, and the PGDP N, artifact-path, and F2 page-key fixes from `feat/coverage-floor` (`2bd0bcb` through `673e5d9`). The handoff recorded `make ci AI=1` exiting 0 on `5f5022c`, and 1,323 tests at 96.92 percent on Python 3.13. On 2026-11-12, after this merge, `uv run pytest --cov` exited 0 and reported 96.92 percent. The collector listed 1,323 tests.
 
 ## Open on master

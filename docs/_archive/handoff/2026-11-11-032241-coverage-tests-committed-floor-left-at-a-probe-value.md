@@ -17,6 +17,8 @@ last_verified: "2026-11-11"
 
 > **Retired — superseded by `docs/handoff/2026-11-11-043740-coverage-floor-and-geometry-fixes-committed.md`.**
 
+The successor is now the [archived merged coverage handoff](2026-11-11-043740-coverage-floor-and-geometry-fixes-committed.md).
+
 ## Goal
 
 Add the missing coverage floor so `make test` enforces it.

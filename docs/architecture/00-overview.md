@@ -37,6 +37,8 @@ Shipped behavior is split across these pages.
 - [Layout contracts](layout-contracts.md) covers detector regions, the role map, text hints, and reviewed structure.
 - [Matching](matching.md) covers the match graph and the PGDP adapters.
 - [PGDP readers](pgdp-readers.md) covers the round container and the F2 parser.
+- [Geometry and input validation](geometry-and-validation.md) covers coordinate
+  flags, NaN rejection, artifact paths, and F2 page keys.
 
 Open work is the [roadmap](../plans/roadmap.md).
 
@@ -139,3 +141,6 @@ Importing the package root does not load shapely. Importing `geometry`,
 repository and fails below 95 percent. The handoff on the merged branch
 recorded 1,323 tests at 96.92 percent on Python 3.13. Open work that remains
 is the [roadmap](../plans/roadmap.md).
+
+On 2026-11-13, the baseline at `1b1605a` passed 1,324 tests with 96.92 percent
+branch coverage using `uv run pytest -n auto --cov`. The floor remains 95 percent.

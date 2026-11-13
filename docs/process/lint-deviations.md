@@ -6,7 +6,7 @@
 - **Status:** active
 - **Owner:** CT
 - **Created:** 2026-09-02
-- **Last verified:** 2026-11-06
+- **Last verified:** 2026-11-13
 - **Provenance:** agent-verified against the current suppression inventory.
 - **Disposition:** Retained as current intent or process guidance.
 
@@ -55,6 +55,10 @@ basedpyright sets `reportUnusedCallResult` to `none`.
 
 Ruff `noqa` comments:
 
+- F401 on the shapely import in `tests/test_torch_free_import.py`. The
+  import establishes the numpy-via-shapely baseline; the imported name is
+  intentionally unused. This entry was reconciled against `20d7e0a` on
+  2026-11-13.
 - S603 on `subprocess.run` in `tests/test_torch_free_import.py` and
   `tests/test_bounding_box_image_ops.py`. The argv is a fixed interpreter
   invocation, not a shell command.

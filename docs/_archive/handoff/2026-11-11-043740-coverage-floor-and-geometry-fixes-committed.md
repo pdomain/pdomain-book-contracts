@@ -1,7 +1,6 @@
 ---
-kind: handoff
-status: "active"
-created: "2026-11-11"
+kind: archive
+status: retired
 created_at: "2026-11-11T04:37:40Z"
 owner: "CT"
 branch: "feat/coverage-floor"
@@ -11,9 +10,13 @@ base_commit: "5f5022cfbb367ff58b4db5c85bb5fc0a04fda516"
 supersedes: "2026-11-11-032241-coverage-tests-committed-floor-left-at-a-probe-value.md"
 handoff_reason: "stopping"
 host: "claude-code"
+created: "2026-11-11"
+last_verified: "2026-11-13"
 ---
 
 # Coverage floor and geometry fixes committed, branch awaits owner review
+
+> **Retired — shipped behavior is in [Geometry and input validation](../../architecture/geometry-and-validation.md).**
 
 ## Goal
 

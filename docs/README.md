@@ -6,7 +6,7 @@
 - **Status:** active
 - **Owner:** CT
 - **Created:** 2026-09-02
-- **Last verified:** 2026-11-12
+- **Last verified:** 2026-11-13
 - **Read when:** navigating repository documentation.
 - **Search terms:** documentation map, docs layout, folder purpose.
 
@@ -24,7 +24,10 @@ How documentation is organized in this repo.
 | Folder | Purpose | Use when |
 | --- | --- | --- |
 | `architecture/` | Durable reference — how the system works today. | Capturing current shape (modules, data flow, contracts, current-state diagrams). |
-| `archive/` | Cold storage. Mirrors the nine active folders. | A doc is no longer in force (shipped, superseded, abandoned). |
+| `_archive/handoff/` | Retired handoffs with historical measurements and review evidence. | Checking a past session's evidence rather than following its resume instructions. |
+| `context/` | Current state, intent, and append-only decisions. | Checking priorities, owner decisions, or a retirement record. |
+| `issues/` | Issue index and historical issue evidence. | Finding open defects or the rationale for a resolved issue. |
+| `handoff/` | Session-continuity records. | Resuming unfinished work; retired records move to `_archive/handoff/`. |
 | `decisions/` | ADRs — dated, append-only "we chose X because Y." | Recording a specific design choice with context, alternatives, consequences. |
 | `plans/` | Active execution — what order to make a spec real. | Sequencing work for an approved spec. |
 | `process/` | Cross-cutting workflow conventions. | Capturing how the team works, not what the system does. |

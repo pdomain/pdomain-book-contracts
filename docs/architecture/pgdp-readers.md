@@ -30,6 +30,11 @@ PGDP round text is read in this package. The shared container is separate from F
 
 `PGDPExport` reads a round export from JSON.
 
+The round reader maps PGDP acute and grave markup for both `N` and `n`
+to the named accent. Commit `4f43a82` corrected these mappings.
+`tests/pgdp/test_pgdp_diacritics_n.py` pins the four cases and passes in
+the 2026-11-13 baseline suite at `1b1605a`.
+
 `offsets.py` reads the round-JSON container, a JSON object of page keys to page text. It tracks byte offsets into that payload. The readers are `read_lexical_index`, `read_lexical_page`, and `read_lexical_json`.
 
 The types still carry F2 in the name: `LexicalF2Index`, `LexicalF2Page`, `LexicalF2Document`, `LexicalF2PageIndex`, and `DecodedF2Character`. The functions do not.
