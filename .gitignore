@@ -7,6 +7,8 @@
 __pycache__/
 *.py[cod]
 .coverage
+.coverage.*
+.ci-ai.log
 htmlcov/
 dist/
 build/

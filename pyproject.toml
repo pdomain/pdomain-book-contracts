@@ -24,6 +24,7 @@ dev = [
     "pre-commit>=4.6,<5",
     "pytest>=8.4,<9",
     "pytest-cov>=7,<8",
+    "pytest-xdist>=3.8,<4",
     # Keep this floor at the ruff-pre-commit `rev:` in .pre-commit-config.yaml.
     # Below it, `uv run ruff check` and the hook disagree on a clean tree.
     "ruff>=0.17.5,<1",
