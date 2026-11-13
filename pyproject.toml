@@ -26,7 +26,7 @@ dev = [
     "pytest-cov>=7,<8",
     # Keep this floor at the ruff-pre-commit `rev:` in .pre-commit-config.yaml.
     # Below it, `uv run ruff check` and the hook disagree on a clean tree.
-    "ruff>=0.16.7,<1",
+    "ruff>=0.17.5,<1",
 ]
 
 [tool.hatch.version]
