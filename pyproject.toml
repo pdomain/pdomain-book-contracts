@@ -42,7 +42,26 @@ version-file = "pdomain_book_contracts/_version.py"
 packages = ["pdomain_book_contracts"]
 
 [tool.hatch.build.targets.sdist]
-exclude = ["**/.venv", "**/.venv-container"]
+exclude = [
+    "/.docgraph",
+    "/.worktrees",
+    "**/.venv",
+    "**/.venv-container",
+    "**/node_modules",
+    "/.ci-ai.log",
+    "/.coverage*",
+    "/.pytest_cache",
+    "/.ruff_cache",
+    "/.basedpyright",
+    "/.mypy_cache",
+    "/.cache",
+    "/htmlcov",
+    "/dist",
+    "/build",
+    "**/__pycache__",
+    "**/*.py[cod]",
+    "**/*.egg-info",
+]
 
 [tool.ruff]
 target-version = "py311"
